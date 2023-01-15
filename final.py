@@ -73,7 +73,7 @@ X = 0
 Y = 0
 Z = 0
 
-# initialisation des fonctions en variables globales
+# initialisation des fonctions en variables globales mpeme si leur utilsaiton en globale peut rendre le code plus vulnérables aux erreures et peut le rendre moins modulaire et utilisable
 
 def runT1():
     global X
@@ -106,10 +106,11 @@ tSomme.writes = ["Z"]
 tSomme.run = runTsomme
 
 # crée une tache
-s1 = TaskSystem([t1, t2, tSomme], {"T1": [], "T2": ["T1"], "somme": ["T1", "T2"]})
-s1.run()
-s1.draw()
+s1 = TaskSystem([t1, t2, tSomme], {"T1": [], "T2": ["T1"], "somme": ["T1", "T2"]}) # Critère de la tâche a executer
+s1.run() # lance la fonction def run 
+s1.draw() # lance la fonction def draw 
 
+# Affiche les valeurs de X Y Z 
 print(X)
 print(Y)
 print(Z)
