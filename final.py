@@ -1,46 +1,58 @@
-import networkx as nx #  On l'utilise pour créer un graphe orienté et ajouter les nœuds en fonction des tâches et dépendances définies dans TaskSystem.
-import matplotlib.pyplot as plt # permet de dessiner le graph
+# coding: utf-8
+# On l'utilise pour créer un graphe orienté et ajouter les nœuds en fonction des tâches et dépendances définies dans TaskSystem.
+import networkx as nx 
+# permet de dessiner le graph
+import matplotlib.pyplot as plt 
 
+# chaque instance de la class task peut avoir un nom différent c pourquoi on déclare "name" en tant que variable d'instance dans le constructeur (__init__) de la classe.
 class Task:
-    # chaque instance de la class task peut avoir un nom différent c pourquoi on déclare "name" en tant que variable d'instance dans le constructeur (__init__) de la classe.
-    def __init__(self):  # utilisation de self pour les instances de classe (on peut acceder aux attributs et aux methodes des classes)
+    # utilisation de self pour les instances de classe (on peut acceder aux attributs et aux methodes des classes)
+    def __init__(self):  
         self.name = ""
         self.reads = []
         self.writes = []
         self.run = None
 
-
-class TaskSystem:  # initialisation de la classe TaskSystem pour une liste de tache
-    def __init__(self, tasks, precedence):  # utilisation du dictionnaire init qui va prendre en entrée une liste de tache
-
+# initialisation de la classe TaskSystem pour une liste de tache
+class TaskSystem:  
+    # utilisation du dictionnaire init qui va prendre en entrée une liste de tache
+    def __init__(self, tasks, precedence):  
         # crée une liste des noms des tâches à partir de la liste des tâches
         task_names = [task.name for task in tasks]
-
-        for task_name in task_names: # boucle qui parcourt la liste task_names 
-            if task_names.count(task_name) > 1: # on utilise la méthode count pour compter le nombre de fois ou ce nom apparait dans la liste 
-                raise ValueError(f"Task dupliqué : {task_name}")
-
-        for task_name, dependencies in precedence.items(): # vérifie si les tâches dépendantes existent dans la liste des tâches
-
-            if task_name not in task_names: # condition si la tâche actuelle existe dans la liste des tâches
-                raise ValueError(f"La Task {task_name} n'existe pas dans la liste des tâches")
-
-            for dependency in dependencies: # boucle qui vérifie si les dépendances de la tâche actuelle existent dans la liste des tâches
+        # boucle qui parcourt la liste task_names 
+        for task_name in task_names: 
+            # on utilise la méthode count pour compter le nombre de fois ou ce nom apparait dans la liste 
+            if task_names.count(task_name) > 1: 
+                raise ValueError("Task dupliquée : " + task_name)
+        # vérifie si les tâches dépendantes existent dans la liste des tâches
+        for task_name, dependencies in precedence.items(): 
+            # condition si la tâche actuelle existe dans la liste des tâches
+            if task_name not in task_names: 
+                raise ValueError("La Task " + task_name + " n'existe pas dans la liste des tâches")
+            # boucle qui vérifie si les dépendances de la tâche actuelle existent dans la liste des tâches
+            for dependency in dependencies: 
                 if dependency not in task_names:
-                    raise ValueError(f"La Task {dependency} n'existe pas dans la liste des tâches")
+                    raise ValueError("La Task " + dependency + " n'existe pas dans la liste des tâches")
 
         self.tasks = tasks
         self.precedence = precedence
     
     def draw(self):
-        G = nx.DiGraph() # création d'un graph orienté 
-        for task in self.tasks:  # boucle for qui parcours les taches dans self.task 
-            G.add_node(task.name) # ajoute chaque tâche dans le graphe en utilisant la méthode add_node() 
-        for task_name, dependencies in self.precedence.items(): # boucle qui permet de parcourir les tâches et leurs dépendances dans la variable self.precedence, en utilisant items() pour accéder aux clés et aux valeurs du dictionnaire.
+        # création d'un graph orienté 
+        G = nx.DiGraph()
+        # boucle for qui parcours les taches dans self.task 
+        for task in self.tasks:
+            # ajoute chaque tâche dans le graphe en utilisant la méthode add_node() 
+            G.add_node(task.name) 
+        # boucle qui permet de parcourir les tâches et leurs dépendances dans la variable self.precedence, en utilisant items() pour accéder aux clés et aux valeurs du dictionnaire.
+        for task_name, dependencies in self.precedence.items(): 
             for dependency in dependencies:
-                G.add_edge(dependency, task_name) # joute des arêtes au graphe pour chaque dépendance en utilisant la méthode add_edge()
-        nx.draw(G, with_labels=True) # utilisation de la fonction draw() de NetworkX pour dessiner le graphe, en spécifiant "with_labels = True" pour afficher les étiquettes des nœuds.
-        plt.show() # afficher le graphe.
+                # joute des arêtes au graphe pour chaque dépendance en utilisant la méthode add_edge()
+                G.add_edge(dependency, task_name)
+        # utilisation de la fonction draw() de NetworkX pour dessiner le graphe, en spécifiant "with_labels = True" pour afficher les étiquettes des nœuds.
+        nx.draw(G, with_labels=True) 
+        # afficher le graphe.
+        plt.show() 
 
 
     # Prend en entré le nom d'un tache et renvoie les taches sui provient de cette dépendance
@@ -51,7 +63,8 @@ class TaskSystem:  # initialisation de la classe TaskSystem pour une liste de ta
         # créer un ensemble de tâches pouvant être exécutées en parallèle
         # declaration d'un ensemble vide avec set(), chaque élément doit être unique et immuable
         parallel_tasks = set()
-        for task in self.tasks:  # boucle for qui parcours les taches dans self.task qui autorise l'execution de chaque task
+        # boucle for qui parcours les taches dans self.task qui autorise l'execution de chaque task
+        for task in self.tasks:  
             run_task = True
             # permet d'obtenir la liste des tasks en cours à partir du nom
             for dependency in self.getDependencies(task.name):
@@ -59,7 +72,8 @@ class TaskSystem:  # initialisation de la classe TaskSystem pour une liste de ta
                 if dependency not in [t.name for t in parallel_tasks]:
                     run_task = False
                     break
-            if run_task:  # la task  en cours et alors rajouté a parallel_tasks
+            # la task  en cours et alors rajouté a parallel_tasks
+            if run_task:  
                 parallel_tasks.add(task)
 
         # on lance des taches parallèlles une fois que toute les tasks on été parcourues avec la boucle for on les exécutes
@@ -105,10 +119,12 @@ tSomme.reads = ["X", "Y"]
 tSomme.writes = ["Z"]
 tSomme.run = runTsomme
 
-# crée une tache
-s1 = TaskSystem([t1, t2, tSomme], {"T1": [], "T2": ["T1"], "somme": ["T1", "T2"]}) # Critère de la tâche a executer
-s1.run() # lance la fonction def run 
-s1.draw() # lance la fonction def draw 
+# Critère de la tâche a executer
+s1 = TaskSystem([t1, t2, tSomme], {"T1": [], "T2": ["T1"], "somme": ["T1", "T2"]}) 
+# lance la fonction def run 
+s1.run()
+# lance la fonction def draw 
+s1.draw() 
 
 # Affiche les valeurs de X Y Z 
 print(X)
