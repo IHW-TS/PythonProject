@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.12) (preloaded format=pdflatex 2023.1.21)  21 JAN 2023 15:49
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.12) (preloaded format=pdflatex 2023.1.21)  31 JAN 2023 13:23
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**c:/Users/TAT/Documents/GitHub/PythonProject/Final/LaTeXVer/RapportAi.tex
-(c:/Users/TAT/Documents/GitHub/PythonProject/Final/LaTeXVer/RapportAi.tex
+**c:/Users/TAT/Documents/GitHub/PythonProject/Projet_IA_SysE/LaTeXVer/RapportAi.tex
+(c:/Users/TAT/Documents/GitHub/PythonProject/Projet_IA_SysE/LaTeXVer/RapportAi.tex
 LaTeX2e <2022-11-01> patch level 1
 L3 programming layer <2023-01-16> (C:\Users\TAT\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
 Document Class: article 2022/07/02 v1.4n Standard LaTeX document class
@@ -119,12 +119,12 @@ Overfull \hbox (15.02841pt too wide) in paragraph at lines 74--75
 [3] [4] (RapportAi.aux) ) 
 Here is how much of TeX's memory you used:
  522 strings out of 476404
- 10255 string characters out of 2790468
+ 10318 string characters out of 2790468
  1858324 words of memory out of 3000000
  20945 multiletter control sequences out of 15000+600000
  516570 words of font info for 46 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 34i,6n,38p,744b,194s stack positions out of 10000i,1000n,20000p,200000b,80000s
+ 34i,6n,38p,753b,194s stack positions out of 10000i,1000n,20000p,200000b,80000s
  <C:\Users\TAT\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1000.pk><C:/Users/TAT/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/TAT/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/TAT/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/TAT/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/TAT/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/TAT/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
 Output written on RapportAi.pdf (4 pages, 85815 bytes).
 PDF statistics:

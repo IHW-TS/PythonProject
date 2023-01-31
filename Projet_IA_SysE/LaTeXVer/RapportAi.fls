@@ -1,6 +1,6 @@
-PWD c:\Users\TAT\Documents\GitHub\PythonProject\Final\LaTeXVer
+PWD c:\Users\TAT\Documents\GitHub\PythonProject\Projet_IA_SysE\LaTeXVer
 INPUT C:\Users\TAT\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
-INPUT c:\Users\TAT\Documents\GitHub\PythonProject\Final\LaTeXVer\RapportAi.tex
+INPUT c:\Users\TAT\Documents\GitHub\PythonProject\Projet_IA_SysE\LaTeXVer\RapportAi.tex
 OUTPUT RapportAi.log
 INPUT C:\Users\TAT\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls
 INPUT C:\Users\TAT\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls

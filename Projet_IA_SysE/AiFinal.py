@@ -106,14 +106,14 @@ def tree_search(vec, moves):
         # Cette condition vérifie si la somme de tous les éléments du nouveau vecteur est égale à zéro. Si c'est le cas, cela signifie que tous les missionnaires et les cannibales ont été déplacés de l'autre côté de la rivière et que la solution a été trouvée. Le nombre de mouvements nécessaires est alors affiché et enregistré dans la variable "solution". La fonction retourne ensuite "vrai" pour indiquer que la solution a été trouvée.
         if sum(new_vec) == 0:
             # Afficher le nombre de mouvements et les nouveaux nombres de missionnaires et de cannibales de chaque côté de la rivière
-            print("Etape Finale", moves, "=", [new_vec[0], new_vec[1], new_vec[2]+1, size-new_vec[0], size-new_vec[1]])
+            print("Etape Finale", moves, "=", [new_vec[0], new_vec[1], new_vec[2], size-new_vec[0], size-new_vec[1]])
             # Enregistrer le nombre de mouvements dans la variable "solution"
             solution = moves
             return True
         # Idem sauf que ca permet de nous afficher le nombre d'etat réalisé
         if tree_search(new_vec, moves):
             # Afficher le nombre de mouvements et les nouveaux nombres de missionnaires et de cannibales de chaque côté de la rivière
-            print("Etape",moves, "=", [new_vec[0], new_vec[1], new_vec[2]+1, size-new_vec[0], size-new_vec[1]])
+            print("Etape",moves, "=", [new_vec[0], new_vec[1], new_vec[2], size-new_vec[0], size-new_vec[1]])
             return True
     # Si aucune solution n'a été trouvée, retourner False
     return False
