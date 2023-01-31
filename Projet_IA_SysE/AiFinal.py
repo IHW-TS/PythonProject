@@ -48,6 +48,7 @@ def v_add(vec):
     actions = [] 
     # Pour chaque action dans la liste des actions possibles
     for action in possible_actions:
+        # vérifie si la somme des deux premiers éléments de la liste "action" est supérieure ou égale à 2. En d'autres termes, cela signifie que la barque doit prendre au moins 2 personnes, missionnaires ou cannibales, à chaque tour. Si la somme est supérieure ou égale à 2, alors la liste "action" est ajoutée à la liste "possible_actions".
         if action[0] + action[1] >= 2:
         # Calcule la nouvelle situation après l'exécution de cette action. Ici on appelle la fonction add avec en paramètre vec qui a les qui prends l'etat inital (barque, misionnaires, cannibales), et action qui va représenter une aciton possible a effectuer. Ainsi add est un nouveau vecteur qui représente l'état résultant de l'exécution de l'action.
             x = add(vec, action) 
