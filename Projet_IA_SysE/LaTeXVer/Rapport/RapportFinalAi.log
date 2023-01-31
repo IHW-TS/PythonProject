@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.12) (preloaded format=pdflatex 2023.1.21)  31 JAN 2023 15:44
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.12) (preloaded format=pdflatex 2023.1.21)  31 JAN 2023 19:27
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -455,41 +455,41 @@ File: lstlang1.sty 2020/03/24 1.8d listings language file
 )
 Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on input line 102.
  [3]
-Overfull \hbox (369.04047pt too wide) in paragraph at lines 121--122
+Overfull \hbox (369.04047pt too wide) in paragraph at lines 132--133
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (369.04047pt too wide) in paragraph at lines 130--131
+Overfull \hbox (369.04047pt too wide) in paragraph at lines 141--142
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (273.03949pt too wide) in paragraph at lines 158--159
+Overfull \hbox (273.03949pt too wide) in paragraph at lines 169--170
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
-
-Overfull \hbox (225.039pt too wide) in paragraph at lines 162--163
+[4]
+Overfull \hbox (225.039pt too wide) in paragraph at lines 173--174
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
-[4] (RapportFinalAi.aux)
+[5] (RapportFinalAi.aux)
 Package rerunfilecheck Info: File `RapportFinalAi.out' has not changed.
 (rerunfilecheck)             Checksum: 09574FFA2C57753085269230089DEB7D;1822.
  ) 
 Here is how much of TeX's memory you used:
- 11926 strings out of 476404
- 186835 string characters out of 2790468
- 1918324 words of memory out of 3000000
- 32025 multiletter control sequences out of 15000+600000
+ 11940 strings out of 476404
+ 187005 string characters out of 2790468
+ 1919324 words of memory out of 3000000
+ 32027 multiletter control sequences out of 15000+600000
  546669 words of font info for 57 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,6n,76p,668b,2091s stack positions out of 10000i,1000n,20000p,200000b,80000s
+ 75i,6n,76p,668b,2095s stack positions out of 10000i,1000n,20000p,200000b,80000s
 {C:/Users/TAT/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc}{C:/Users/TAT/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ts1.enc}<C:/Users/TAT/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.pfb><C:/Users/TAT/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.pfb><C:/Users/TAT/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr10.pfb><C:/Users/TAT/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr12.pfb><C:/Users/TAT/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr17.pfb>
-Output written on RapportFinalAi.pdf (4 pages, 176603 bytes).
+Output written on RapportFinalAi.pdf (5 pages, 179408 bytes).
 PDF statistics:
- 182 PDF objects out of 1000 (max. 8388607)
- 82 named destinations out of 1000 (max. 500000)
+ 199 PDF objects out of 1000 (max. 8388607)
+ 94 named destinations out of 1000 (max. 500000)
  86 words of extra memory for PDF output out of 10000 (max. 10000000)
 

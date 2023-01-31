@@ -100,9 +100,20 @@ Dans ce rapport, nous avons choisi d'implémenter la solution du problème des m
 
 
 \begin{lstlisting}[language=Python, caption=Code Python]
-    import sys
+
     import copy
+    n = int(input("Entrez le nombre de missionnaires et de cannibales: "))
+    start = [n, n, 1]
+    size = n
+    possible_actions = []
+    p = 2 
     
+    while p <= n: 
+    for i in range(p + 1):
+        for j in range(p - i + 1):
+            possible_actions.append([i, j, 1])
+    p += 1
+
     start = [3, 3, 1]
     size = 3
     memo = []

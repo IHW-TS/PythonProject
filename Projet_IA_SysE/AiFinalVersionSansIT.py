@@ -1,30 +1,12 @@
 # "copy" permet de copier des objets en Python sans les lier à leur source.
 import copy
-
-# Entrer le nombre de missionnaires et de cannibales 
-n = int(input("Entrez le nombre de missionnaires et de cannibales: "))
-# On initialise le tableau "start" avec le nombre de missionnaires et cannibales, et la barque sur la rive de départ (1)
-start = [n, n, 1]
-# On définit la taille de la liste "possible_actions" en prenant le nombre maximal de missionnaires et cannibales
-size = n
-# On initialise la liste "possible_actions" qui sera utilisée pour déterminer les actions possibles
-possible_actions = []
-#On initialise la variable "p" à 2, qui représente la capacité minimale de la barque
-p = 2 
-#Tant que p est inférieur ou égal à n, on exécute la boucle suivante 
-# Le nombre de missionnaires et de cannibales dans la barque est représenté par i et j respectivement.
-# La variable "p" représente la capacité maximale de la barque. La boucle interne (for j in range(p - i + 1)) calcule le nombre maximum de cannibales que la barque peut transporter en fonction de la capacité maximale et du nombre de missionnaires déjà présents dans la barque. La boucle ajoute ensuite cette combinaison de missionnaires et de cannibales dans l'ensemble d'actions possibles pour la barque.
-# Lorsque toutes les combinaisons possibles ont été ajoutées, la barque peut prendre une capacité supplémentaire et la boucle recommence jusqu'à ce que toutes les combinaisons aient été ajoutées pour une capacité maximale égale au nombre total de missionnaires et de cannibales.
-# La liste possible_actions est utilisée pour vérifier si une action est valide à chaque étape de la résolution du problème.
-while p <= n: 
-    # Pour chaque valeur i dans la plage de 0 à p+1, on exécute la boucle interne
-    for i in range(p + 1):
-        # Pour chaque valeur j dans la plage de 0 à p-i+1, on ajoute une nouvelle action à la liste "possible_actions"
-        for j in range(p - i + 1):
-            # On augmente la valeur de p de 1 pour la prochaine itération
-            possible_actions.append([i, j, 1])
-    p += 1
-
+# Nombre de missionnaires et de cannibales sur la berge gauche au départ, initialisé à 3 et la barque à 1 (0 quand il sera sur la rive de gauche) 
+start = [3, 3, 1]
+# Taille maximale des groupes de missionnaires et de cannibales et du "bateau"
+size = 3
+# Liste des actions possibles pour faire les missionnaires et les cannibales, la dernière valeur correspond à la barque 
+# On peut prendre en exemple le premier cas [1, 0, 1] : Ici on donne la possibilité au programme de réaliser l'action de faire traverser un missionnaire de l'autre coté du fleuve si le nombre de canniblaes est à 0 et que le bateau est à droite (pour rappelle l'indice signifie que la barque se trouve dans le côté droit de la rivière)
+possible_actions = [[1, 0, 1], [2, 0, 1], [0, 1, 1], [0, 2, 1], [1, 1, 1]]
 # "Memo" est une liste qui est utilisée pour stocker les différents états du bateau rencontrés lors de l'exécution de l'algorithme. Cela permet d'éviter de refaire les mêmes étapes plusieurs fois, ce qui accélère l'algorithme. Si un état donné a déjà été vu, l'algorithme ne le considérera pas à nouveau, ce qui évite les boucles infinies et améliore les performances du programme.
 # Par exemple, considérons que nous cherchons à déplacer 3 missionnaires et 3 cannibales d'une rive à l'autre en utilisant un bateau qui ne peut transporter qu'une ou deux personnes à la fois. L'algorithme va explorer toutes les possibilités pour trouver la solution optimale en termes de nombre de déplacements de bateau. Si l'algorithme rencontre déjà un état où 2 missionnaires et 1 cannibale sont sur la rive gauche, il n'a plus besoin de recommencer à partir de cet état, car il a déjà été exploré. Au lieu de cela, l'algorithme peut simplement enregistrer cet état dans la liste "memo" et continuer à explorer les autres possibilités.
 memo = []
@@ -48,11 +30,10 @@ def v_add(vec):
     actions = [] 
     # Pour chaque action dans la liste des actions possibles
     for action in possible_actions:
-        if action[0] + action[1] >= 2:
         # Calcule la nouvelle situation après l'exécution de cette action. Ici on appelle la fonction add avec en paramètre vec qui a les qui prends l'etat inital (barque, misionnaires, cannibales), et action qui va représenter une aciton possible a effectuer. Ainsi add est un nouveau vecteur qui représente l'état résultant de l'exécution de l'action.
-            x = add(vec, action) 
+        x = add(vec, action) 
         # Le nombre de missionnaires et de cannibales sur l'autre rive est calculé en utilisant la fonction suppr avec [size, size, 1] ( on aurait pu ecrire [3, 3, 1]) comme vecteur de soustraction.
-            y = suppr([size, size, 1], x) 
+        y = suppr([size, size, 1], x) 
         # Vérifie si la nouvelle situation est valide en suivant les règles de jeu
         # "x[0] >= 0" vérifie que le nombre de missionnaires sur la rive gauche après l'action est supérieur ou égal à zéro.
         # "x[1] >= 0" vérifie que le nombre de cannibales sur la rive gauche après l'action est supérieur ou égal à zéro.
@@ -60,10 +41,10 @@ def v_add(vec):
         # "x[1] <= size" vérifie que le nombre de cannibales sur la rive gauche après l'action est inférieur ou égal à la taille maximale. 
         # "(x[0] >= x[1] or x[0] == 0)" vérifie que le nombre de missionnaires sur la rive gauche après l'action est supérieur ou égal au nombre de cannibales ou que le nombre de missionnaires est égal à zéro.
         # "(y[0] >= y[1] or y[0] == 0)" vérifie que le nombre de missionnaires sur la rive droite après l'action est supérieur ou égal au nombre de cannibales ou que le nombre de missionnaires est égal à zéro.
-            if x[0] >= 0 and x[1] >= 0 and x[0] <= size and x[1] <= size and (x[0] >= x[1] or x[0] == 0) and (y[0] >= y[1] or y[0] == 0):
+        if x[0] >= 0 and x[1] >= 0 and x[0] <= size and x[1] <= size and (x[0] >= x[1] or x[0] == 0) and (y[0] >= y[1] or y[0] == 0):
             # Si toutes les conditions sont remplies, l'action est considérée comme valide et ajoutée à la liste "actions".
             # Pour rappel, la fonction append est une méthode de la classe list en Python qui permet d'ajouter un élément à la fin de la liste.
-                actions.append(action)        
+            actions.append(action)        
     return actions 
 
 # Par Exemple : Supposons que vec = [2, 2, 1] et size = 3.
@@ -73,12 +54,12 @@ def v_add(vec):
 def v_suppr(vec):
     actions = []
     for action in possible_actions:
-        if action[0] + action[1] >= 2: 
         # Suppr au lieu de add
-            x = suppr(vec, action)
-            y = suppr([size, size, 1], x)
-            if x[0] >= 0 and x[1] >= 0 and x[0] <= size and x[1] <= size and (x[0] >= x[1] or x[0] == 0) and (y[0] >= y[1] or y[0] == 0):
-                actions.append(action)
+        x = suppr(vec, action)
+        y = suppr([size, size, 1], x)
+        if x[0] >= 0 and x[1] >= 0 and x[0] <= size and x[1] <= size and (x[0] >= x[1] or x[0] == 0) and (y[0] >= y[1] or y[0] == 0):
+            actions.append(action)
+
     return actions
 
 def tree_search(vec, moves):
