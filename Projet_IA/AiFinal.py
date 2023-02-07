@@ -1,21 +1,30 @@
 # "copy" permet de copier des objets en Python sans les lier à leur source.
 import copy
 
-# Entrer le nombre de missionnaires et de cannibales 
+# Entrer le nombre de missionnaires et de cannibales ainsi que la capacité de la barque
 n = int(input("Entrez le nombre de missionnaires et de cannibales: "))
+p = int(input("Entrez la capacité de la bateau : "))
 # On initialise le tableau "start" avec le nombre de missionnaires et cannibales, et la barque sur la rive de départ (1)
 start = [n, n, 1]
 # On définit la taille de la liste "possible_actions" en prenant le nombre maximal de missionnaires et cannibales
 size = n
-# On initialise la liste "possible_actions" qui sera utilisée pour déterminer les actions possibles
 possible_actions = []
-#On initialise la variable "p" à 2, qui représente la capacité minimale de la barque
-p = 2 
 #Tant que p est inférieur ou égal à n, on exécute la boucle suivante 
 # Le nombre de missionnaires et de cannibales dans la barque est représenté par i et j respectivement.
 # La variable "p" représente la capacité maximale de la barque. La boucle interne (for j in range(p - i + 1)) calcule le nombre maximum de cannibales que la barque peut transporter en fonction de la capacité maximale et du nombre de missionnaires déjà présents dans la barque. La boucle ajoute ensuite cette combinaison de missionnaires et de cannibales dans l'ensemble d'actions possibles pour la barque.
 # Lorsque toutes les combinaisons possibles ont été ajoutées, la barque peut prendre une capacité supplémentaire et la boucle recommence jusqu'à ce que toutes les combinaisons aient été ajoutées pour une capacité maximale égale au nombre total de missionnaires et de cannibales.
 # La liste possible_actions est utilisée pour vérifier si une action est valide à chaque étape de la résolution du problème.
+
+while p <= n:
+    for i in range(p + 1):
+        for j in range(p - i + 1):
+            if i + j <= p:
+                possible_actions.append([i, j, 1])
+    p += 1
+
+memo = []
+solution = 0
+
 while p <= n: 
     # Pour chaque valeur i dans la plage de 0 à p+1, on exécute la boucle interne
     for i in range(p + 1):
