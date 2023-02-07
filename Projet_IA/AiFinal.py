@@ -22,18 +22,6 @@ while p <= n:
                 possible_actions.append([i, j, 1])
     p += 1
 
-memo = []
-solution = 0
-
-while p <= n: 
-    # Pour chaque valeur i dans la plage de 0 à p+1, on exécute la boucle interne
-    for i in range(p + 1):
-        # Pour chaque valeur j dans la plage de 0 à p-i+1, on ajoute une nouvelle action à la liste "possible_actions"
-        for j in range(p - i + 1):
-            # On augmente la valeur de p de 1 pour la prochaine itération
-            possible_actions.append([i, j, 1])
-    p += 1
-
 # "Memo" est une liste qui est utilisée pour stocker les différents états du bateau rencontrés lors de l'exécution de l'algorithme. Cela permet d'éviter de refaire les mêmes étapes plusieurs fois, ce qui accélère l'algorithme. Si un état donné a déjà été vu, l'algorithme ne le considérera pas à nouveau, ce qui évite les boucles infinies et améliore les performances du programme.
 # Par exemple, considérons que nous cherchons à déplacer 3 missionnaires et 3 cannibales d'une rive à l'autre en utilisant un bateau qui ne peut transporter qu'une ou deux personnes à la fois. L'algorithme va explorer toutes les possibilités pour trouver la solution optimale en termes de nombre de déplacements de bateau. Si l'algorithme rencontre déjà un état où 2 missionnaires et 1 cannibale sont sur la rive gauche, il n'a plus besoin de recommencer à partir de cet état, car il a déjà été exploré. Au lieu de cela, l'algorithme peut simplement enregistrer cet état dans la liste "memo" et continuer à explorer les autres possibilités.
 memo = []
