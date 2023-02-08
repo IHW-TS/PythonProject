@@ -1,5 +1,6 @@
 import networkx as nx 
 import matplotlib.pyplot as plt 
+import random 
 
 class Task:
     def __init__(self):  
@@ -22,7 +23,11 @@ class TaskSystem:
                     raise ValueError("La Task " + dependency + " n'existe pas dans la liste des tâches")
 
         self.tasks = tasks
-        self.precedence = precedence
+        self.precedence = precedence   
+        self.variables = set()
+        for task in tasks:
+            self.variables.update(task.reads)
+            self.variables.update(task.writes)
     
     def draw(self):
         G = nx.DiGraph()
@@ -37,7 +42,7 @@ class TaskSystem:
     def getDependencies(self, task_name):
         return self.precedence[task_name]
 
-    def run(self):
+    def run(self, variable_values):
         parallel_tasks = set()
         for task in self.tasks:  
             run_task = True
@@ -49,7 +54,30 @@ class TaskSystem:
                 parallel_tasks.add(task)
 
         for task in parallel_tasks:
-            task.run()
+            if task.reads:
+                task_args = [variable_values[var] for var in task.reads]
+                task.run(*task_args)
+            else:
+                task.run()
+
+
+
+    def detTestRnd(self, num_tests):
+        for i in range(num_tests):
+            # Générer des valeurs aléatoires pour les variables
+            variable_values = {var: random.randint(0, 100) for var in self.variables}
+            
+            # Exécuter le système de tâches avec ces valeurs de variable
+            result1 = self.run(variable_values)
+            
+            # Exécuter à nouveau le système de tâches avec les mêmes valeurs de variable
+            result2 = self.run(variable_values)
+            
+            # Vérifier si les résultats sont identiques
+            if result1 != result2:
+                return False
+        
+        return True
 
 X = 0
 Y = 0
