@@ -1,5 +1,5 @@
 \documentclass{article}
-\usepackage[utf8]{inputenc}
+\usepackage[utf8x]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{amsmath}
@@ -12,7 +12,7 @@
 \usepackage{color}
 \usepackage{courier}
 \usepackage{listings}
-
+\usepackage{indentfirst}
 
 \title{Le Problème des Missionnaires et des Cannibales}
 \author{IHW}
@@ -22,16 +22,241 @@
 
 \maketitle
 
-\section{Introduction}
-\par Le problème des missionnaires et des cannibales est un problème classique en Intelligence Artificielle qui consiste à déterminer la séquence optimale d'actions pour transporter une certaine quantité de missionnaires et de cannibales d'une rive à l'autre d'un fleuve à bord d'une barque de capacité limitée. Les contraintes du problème incluent la nécessité de ne pas laisser un nombre supérieur de cannibales à un endroit donné sans la présence d'au moins un missionnaire pour les surveiller.
+\section{Le problème des missionnaires et des cannibales}
 
-\section{Le Cas Général}
-\par Le cas général du problème des missionnaires et des cannibales peut être défini par un certain nombre de missionnaires et de cannibales, une barque de capacité limitée, et les contraintes de sécurité susmentionnées. Ce problème peut être formulé mathématiquement en tant que problème de recherche de graphe. La barque est représentée par un arc entre les noeuds représentant les rives du fleuve. Chaque noeud représente une configuration possible du nombre de missionnaires et de cannibales sur chaque rive.
+Le problème des missionnaires et des cannibales est un problème classique en Intelligence Artificielle qui consiste à déterminer la séquence optimale d'actions pour transporter une certaine quantité de missionnaires et de cannibales d'une rive à l'autre d'un fleuve à bord d'une barque de capacité limitée. Les contraintes du problème incluent la nécessité de ne pas laisser un nombre supérieur de cannibales à un endroit donné sans la présence d'au moins un missionnaire pour les surveiller.
+
+
+\subsection{Représentation}
+
+La situation est représentée par deux rives, la rive gauche et la rive droite, ainsi que le fleuve qui les sépare. La barque peut être située sur l'une ou l'autre rive ou sur le fleuve.
+
+\noindent On peut représenter la situation par un tableau avec quatre colonnes correspondant aux différents emplacements, et deux lignes correspondant aux missionnaires et aux cannibales :
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+& Rive gauche & Fleuve & Rive droite \\
+\hline
+Missionnaires & $M_L$ & & $M_R$ \\
+\hline
+Cannibales & $C_L$ & & $C_R$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\noindent Le nombre de missionnaires et de cannibales est représenté par des variables $M_L$, $C_L$, $M_R$ et $C_R$. Dans la suite du problème leur nombre sera definit par la variable $n$.
+
+\noindent On peut également ajouter une colonne pour représenter la position de la barque, qui peut être sur la rive gauche, sur la rive droite ou sur le fleuve :
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+& Rive gauche & Fleuve & Rive droite & Bateau \\
+\hline
+Missionnaires & $M_L$ & & $M_R$ & 1 \\
+\hline
+Cannibales & $C_L$ & & $C_R$ & 1 \\
+\hline
+\end{tabular}
+\end{center}
+
+\noindent La position du bateau est représentée par une variable $p$ représentant ca capacité, et peut prendre les valeurs "0" pour la rive gauche, "1" pour la rive droite ou "" pour le fleuve. Si le bateau est sur la rive gauche ou la rive droite.
+
+\subsection{Exemple}
+
+Pour résoudre ce problème, nous pouvons utiliser des tableaux pour représenter l'état actuel des missionnaires et des cannibales, ainsi que la position du bateau. Voici les tableaux pour chaque étape de la résolution :
+
+\subsubsection{Étape 0}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+\textbf{M\_G} & \textbf{C\_G} & \textbf{Bateau} & \textbf{M\_D} & \textbf{C\_D} & \textbf{Nb\_déplacements} & \textbf{Déplacements} \\
+\hline
+3 & 3 & 1 & 0 & 0 & 0 & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\noindent L'étape 0, représente l'état initial du problème avec 3 missionnaires, 3 cannibales ainsi que la barque positionné sur la rive gauche.
+
+\subsubsection{Étape 1}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+\textbf{M\_G} & \textbf{C\_G} & \textbf{Bateau} & \textbf{M\_D} & \textbf{C\_D} & \textbf{Nb\_déplacements} & \textbf{Déplacements} \\
+\hline
+3 & 1 & 0 & 0 & 2 & 1 & 2 CG $\rightarrow$ 2 CD \\
+\hline
+\end{tabular}
+\end{center}
+
+\noindent Dans l'étape 1, le bateau est sur la rive droite avec deux cannibales à bord.
+
+\subsubsection{Étape 2}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+\textbf{M\_G} & \textbf{C\_G} & \textbf{Bateau} & \textbf{M\_D} & \textbf{C\_D} & \textbf{Nb\_déplacements} & \textbf{Déplacements} \\
+\hline
+3 & 2 & 1 & 0 & 1 & 2 & 1 CD $\rightarrow$ 1 CG \\
+\hline
+\end{tabular}
+\end{center}
+
+\noindent Dans l'étape 2, le bateau est sur la rive gauche avec un cannibales à bord.
+
+\subsubsection{Étape 3}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+\textbf{M\_G} & \textbf{C\_G} & \textbf{Bateau} & \textbf{M\_D} & \textbf{C\_D} & \textbf{Nb\_déplacements} & \textbf{Déplacements} \\
+\hline
+3 & 0 & 0 & 0 & 3 & 3 & 2 CG $\rightarrow$ 2 CD \\
+\hline
+\end{tabular}
+\end{center}
+
+\noindent Dans l'étape 3, le bateau est sur la rive droite avec deux cannibales à bord.
+
+\subsubsection{Étape 4}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+\textbf{M\_G} & \textbf{C\_G} & \textbf{Bateau} & \textbf{M\_D} & \textbf{C\_D} & \textbf{Nb\_déplacements} & \textbf{Déplacements} \\
+\hline
+3 & 1 & 1 & 0 & 2 & 4 & 1 CD $\rightarrow$ 1 CG \\
+\hline
+\end{tabular}
+\end{center}
+
+\noindent Dans l'étape 4, le bateau est de nouveau sur la rive gauche avec un cannibale à bord.
+
+\subsubsection{Étape 5}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+\textbf{M\_G} & \textbf{C\_G} & \textbf{Bateau} & \textbf{M\_D} & \textbf{C\_D} & \textbf{Nb\_déplacements} & \textbf{Déplacements} \\
+\hline
+1 & 1 & 0 & 2 & 2 & 5 &1 CG 1 MG$\rightarrow$1 CD 1 MD\\
+\hline
+\end{tabular}
+\end{center}
+
+\noindent Dans l'étape 5, le bateau est de retour sur la rive droite avec un missionnaire et un cannibale à bord.
+
+\subsubsection{Étape 6}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+\textbf{M\_G} & \textbf{C\_G} & \textbf{Bateau} & \textbf{M\_D} & \textbf{C\_D} & \textbf{Nb\_déplacements} & \textbf{Déplacements} \\
+\hline
+2 & 2 & 1 & 1 & 1 & 6 & 1 CD 1 MD$\rightarrow$1 CG 1 MG\\
+\hline
+\end{tabular}
+\end{center}
+
+\noindent Dans l'étape 6, le bateau est de retour sur la rive gauche avec un missionnaire et un cannibale à bord.
+
+\subsubsection{Étape 7}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+\textbf{M\_G} & \textbf{C\_G} & \textbf{Bateau} & \textbf{M\_D} & \textbf{C\_D} & \textbf{Nb\_déplacements} & \textbf{Déplacements} \\
+\hline
+0 & 2 & 0 & 3 & 1 & 7 & 2 MG $\rightarrow$ 2 MD \\
+\hline
+\end{tabular}
+\end{center}
+
+\noindent Dans l'étape 7, le bateau est de nouveau sur la rive droite avec 2 missionnaires à bord.
+
+\subsubsection{Étape 8}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+\textbf{M\_G} & \textbf{C\_G} & \textbf{Bateau} & \textbf{M\_D} & \textbf{C\_D} & \textbf{Nb\_déplacements} & \textbf{Déplacements} \\
+\hline
+0 & 3 & 1 & 3 & 0 & 8 & 1 CD $\rightarrow$ 1 CG \\
+\hline
+\end{tabular}
+\end{center}
+
+\noindent Dans l'étape 8, le bateau est de retour sur la rive gauche avec un cannibale à bord.
+
+\subsubsection{Étape 9}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+\textbf{M\_G} & \textbf{C\_G} & \textbf{Bateau} & \textbf{M\_D} & \textbf{C\_D} & \textbf{Nb\_déplacements} & \textbf{Déplacements} \\
+\hline
+0 & 1 & 0 & 3 & 2 & 9 & 2 CG $\rightarrow$ 2 CD \\
+\hline
+\end{tabular}
+\end{center}
+
+\noindent Dans l'étape 9, le bateau est de nouveau sur la rive droite avec 2 cannibales à bord.
+
+\subsubsection{Étape 10}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+\textbf{M\_G} & \textbf{C\_G} & \textbf{Bateau} & \textbf{M\_D} & \textbf{C\_D} & \textbf{Nb\_déplacements} & \textbf{Déplacements} \\
+\hline
+1 & 1 & 1 & 2 & 2 & 10 & 1 MD $\rightarrow$ 1 MG \\
+\hline
+\end{tabular}
+\end{center}
+
+\noindent Dans l'étape 10, le bateau est de retour sur la rive gauche avec un missionnaire à bord.
+
+\subsubsection{Étape 11}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+\textbf{M\_G} & \textbf{C\_G} & \textbf{Bateau} & \textbf{M\_D} & \textbf{C\_D} & \textbf{Nb\_déplacements} & \textbf{Déplacements} \\
+\hline
+0 & 0 & 0 & 3 & 3 & 11 & 1 MG 1 CG$\rightarrow$ 1 MD 1 CD\\
+\hline
+\end{tabular}
+\end{center}
+Dans cette dernière étape, le bateau est de retour sur la rive gauche avec un missionnaire et un cannibale à bord.
+
+\subsection{Solution complète}
+
+Voici la solution complète en termes de déplacements du bateau :
 \newline
-Le but est de trouver le chemin le plus court entre le noeud représentant la configuration initiale et le noeud représentant la configuration finale, dans lequel la barque a été utilisée pour transporter tous les missionnaires et les cannibales d'une rive à l'autre. Les arcs sortants d'un noeud représentent les actions possibles pour atteindre une configuration différente, en fonction de la capacité de la barque et des contraintes de sécurité.
+\\
+{\bf Etape 1 : }2 CG $\rightarrow$ 2 CD \\
+{\bf Etape 2 : }1 CD $\rightarrow$ 1 CG \\
+{\bf Etape 3 : }2 CG $\rightarrow$ 2 CD \\
+{\bf Etape 4 : }1 CD $\rightarrow$ 1 CG \\
+{\bf Etape 5 : }1 CG 1 MG $\rightarrow$ 1 CD 1 MD \\
+{\bf Etape 6 : }1 CD 1 MD $\rightarrow$ 1 CG 1 MG \\
+{\bf Etape 7 : }2 MG $\rightarrow$ 2 MD \\
+{\bf Etape 8 : }1 CD  $\rightarrow$ 1 CG \\
+{\bf Etape 9 : }2 CG $\rightarrow$ 2 CD \\
+{\bf Etape 10 : }1 MD $\rightarrow$ 1 MG \\
+{\bf Etape 11 : }1 MG 1 CG $\rightarrow$ 1 MD 1 CD \\
+
+\noindent Cette solution est la plus optimal en prend en compte un total de 11 étapes pour résoudre le problème des missionnaires et des cannibales.
+
 
 \section{Méthodes de Résolution}
-\par Il existe plusieurs méthodes pour résoudre le problème des missionnaires et des cannibales, notamment la recherche en profondeur d'abord (DFS), la recherche en largeur d'abord (BFS), l'algorithme A* et l'algorithme IDA*. La méthode choisie dépend du nombre de missionnaires et de cannibales, de la capacité de la barque, et des contraintes de sécurité.
+
+Il existe plusieurs méthodes pour résoudre le problème des missionnaires et des cannibales, notamment la recherche en profondeur d'abord (DFS), la recherche en largeur d'abord (BFS), l'algorithme A* et l'algorithme IDA*. La méthode choisie dépend du nombre de missionnaires et de cannibales, de la capacité de la barque, et des contraintes de sécurité.
 \newline
 Le problème des missionnaires et des cannibales peut être modélisé sous la forme d'un arbre de recherche, où chaque nœud représente un état possible de la situation. Les arcs de l'arbre représentent les différents mouvements possibles des missionnaires et des cannibales. L'algorithme de tree\_search consiste à explorer systématiquement toutes les solutions potentielles en utilisant une stratégie de recherche en profondeur DFS ou en largeur BFS.
 \newline
@@ -43,30 +268,30 @@ En utilisant l'algorithme tree\_search, il est possible de trouver la solution o
 \section{Implémentation de l'Algorithme}
 Nous avons implémenté l'algorithme de recherche en arbre en utilisant le langage Python et en utilisant les fonctions suivantes:
 \begin{itemize}
-\item \textbf{suppr}: cette fonction calcule la différence entre deux vecteurs.
-\item \textbf{add}: cette fonction calcule la somme de deux vecteurs.
-\item \textbf{v\_add}: cette fonction retourne toutes les actions possibles pour ajouter des personnes à bord du bateau.
-\item \textbf{v\_suppr}: cette fonction retourne toutes les actions possibles pour retirer des personnes à bord du bateau.
-\item \textbf{tree\_search}: cette fonction implémente l'algorithme de recherche en arbre en utilisant les fonctions précédentes.
+\item \textbf{suppr} : cette fonction calcule la différence entre deux vecteurs.
+\item \textbf{add} : cette fonction calcule la somme de deux vecteurs.
+\item \textbf{v\_add} : cette fonction retourne toutes les actions possibles pour ajouter des personnes à bord du bateau.
+\item \textbf{v\_suppr} : cette fonction retourne toutes les actions possibles pour retirer des personnes à bord du bateau.
+\item \textbf{tree\_search} : cette fonction implémente l'algorithme de recherche en arbre en utilisant les fonctions précédentes.
 \end{itemize}
 
 \section{Résultats et Analyse}
-Après avoir exécuté notre algorithme, nous avons obtenu un nombre total d'étapes égal à 11. Ce nombre d'étapes est le minimum nécessaire pour transporter les trois missionnaires et les trois cannibales de la rive gauche à la rive droite de la rivière.
 
+\noindent  Après avoir exécuté notre algorithme, nous avons obtenu un nombre total d'étapes égal à 11. Ce nombre d'étapes est le minimum nécessaire pour transporter les trois missionnaires et les trois cannibales de la rive gauche à la rive droite de la rivière.
 
-Dans cette section, nous allons examiner de manière détaillée l'efficacité et les performances de l'algorithme Tree Search pour résoudre le problème des missionnaires et des cannibales.
-
+\noindent  Dans cette section, nous allons examiner de manière détaillée l'efficacité et les performances de l'algorithme Tree Search pour résoudre le problème des missionnaires et des cannibales.
 Le problème des missionnaires et des cannibales consiste à transporter trois missionnaires et trois cannibales d'une rive à l'autre d'un fleuve en utilisant un bateau qui peut accueillir au maximum deux personnes à la fois. Le but est de transporter tout le monde de l'autre côté en respectant les contraintes suivantes :
+\begin{itemize}
+\item Aucun cannibale ne doit jamais être en nombre supérieur à celui des missionnaires sur une même rive.
+\item Seules deux personnes peuvent monter dans le bateau à la fois.
+\end{itemize}
 
-Aucun cannibale ne doit jamais être en nombre supérieur à celui des missionnaires sur une même rive.
-Seules deux personnes peuvent monter dans le bateau à la fois.
-Pour résoudre ce problème, nous utilisons l'algorithme Tree Search. Tree Search est un algorithme de parcours de graphe qui consiste à explorer systématiquement toutes les possibilités en utilisant une structure de données sous la forme d'un arbre. Le noeud de départ de l'arbre représente l'état initial du problème et chaque noeud enfant représente un état possible qui est obtenu à partir de l'état parent en effectuant une action.
+\noindent Pour résoudre ce problème, nous utilisons l'algorithme Tree Search. Tree Search est un algorithme de parcours de graphe qui consiste à explorer systématiquement toutes les possibilités en utilisant une structure de données sous la forme d'un arbre. Le noeud de départ de l'arbre représente l'état initial du problème et chaque noeud enfant représente un état possible qui est obtenu à partir de l'état parent en effectuant une action.
 
-Dans notre programme, nous utilisons l'algorithme Tree Search pour explorer toutes les combinaisons possibles d'actions pour transporter les missionnaires et les cannibales d'une rive à l'autre. Nous utilisons une liste memo pour enregistrer les états visités afin de ne pas explorer deux fois les mêmes combinaisons.
-
+\noindent Dans notre programme, nous utilisons l'algorithme Tree Search pour explorer toutes les combinaisons possibles d'actions pour transporter les missionnaires et les cannibales d'une rive à l'autre. Nous utilisons une liste memo pour enregistrer les états visités afin de ne pas explorer deux fois les mêmes combinaisons.
 Nous définissons également les fonctions v\_add et v\_suppr pour retourner les actions possibles qui peuvent être effectuées en fonction de l'état actuel. Les fonctions add et suppr permettent de mettre à jour l'état en fonction de l'action choisie.
 
-Lorsque nous trouvons un état final qui correspond à la condition où tous les missionnaires et les cannibales se trouvent de l'autre côté du fleuve, nous stockons le nombre d'étapes nécessaires pour atteindre cet état dans la variable solution.
+\noindent Lorsque nous trouvons un état final qui correspond à la condition où tous les missionnaires et les cannibales se trouvent de l'autre côté du fleuve, nous stockons le nombre d'étapes nécessaires pour atteindre cet état dans la variable solution.
 
 \begin{figure}[h]
 \centering
@@ -74,23 +299,23 @@ Lorsque nous trouvons un état final qui correspond à la condition où tous les
 \label{fig:tree_search_example}
 \end{figure}
 
-Cette illustration \ref{fig:tree_search_example} montre un exemple de l'arbre de recherche généré par l'algorithme tree search pour le problème des missionnaires et des cannibales. On peut voir que l'arbre de recherche est formé de nœuds, chacun représentant une configuration possible pour le problème. Le nœud racine est la configuration initiale, et les nœuds enfants représentent les différentes actions possibles à partir de cette configuration.
-
+\noindent Cette illustration \ref{fig:tree_search_example} montre un exemple de l'arbre de recherche généré par l'algorithme tree search pour le problème des missionnaires et des cannibales. On peut voir que l'arbre de recherche est formé de nœuds, chacun représentant une configuration possible pour le problème. Le nœud racine est la configuration initiale, et les nœuds enfants représentent les différentes actions possibles à partir de cette configuration.
 L'algorithme tree search parcourt l'arbre de manière itérative et sélectionne le nœud suivant à explorer en fonction d'une fonction de coût. Dans le cas du problème des missionnaires et des cannibales, la fonction de coût peut mesurer le nombre de missionnaires sur la rive gauche, ou le temps nécessaire pour résoudre le problème.
-
 L'algorithme continue à explorer les nœuds jusqu'à ce qu'une solution soit trouvée ou qu'il n'y ait plus de nœuds à explorer. Dans le cas du problème des missionnaires et des cannibales, la solution est une configuration où tous les missionnaires et les cannibales sont sur la rive droite.
-
 Le rapport montre les résultats de l'étude expérimentale de l'algorithme tree search pour résoudre le problème des missionnaires et des cannibales. Les résultats incluent les temps d'exécution moyens pour trouver une solution pour différentes tailles d'arbre de recherche, ainsi que les fonctions de coût utilisées et leur impact sur les temps d'exécution. Les résultats peuvent être comparés à ceux obtenus avec d'autres algorithmes de recherche pour évaluer la performance de l'algorithme tree search pour ce problème en particulier.
 
 \section{Améliorations et extentions}
 
 \subsection{Implémentation de l'algorithme A*}
+ 
 L'implémentation de l'algorithme A* consiste à utiliser une heuristique pour orienter la recherche et trouver un chemin plus rapide vers la solution. En utilisant une heuristique pour évaluer la fonction de coût, le programme peut explorer les états les plus prometteurs en premier et éviter les chemins inutiles. Cela peut améliorer considérablement la vitesse de convergence vers la solution.
 
 \subsection{Application à d'autres problèmes}
+
 Cette extension consiste à utiliser l'algorithme développé pour résoudre d'autres problèmes tels que les huit reines, le labyrinthe, etc. En utilisant les mêmes méthodes de recherche, l'algorithme peut être facilement adapté à de nouveaux problèmes en définissant simplement les actions et les conditions d'état possibles.
 
 \subsection{Intégration de l'interface graphique}
+
 Cette extension consiste à ajouter une interface graphique pour visualiser l'arbre de recherche et les étapes de la solution. Cela peut aider à mieux comprendre comment la recherche s'est déroulée et à déboguer le programme plus facilement. De plus, l'interface graphique peut rendre l'algorithme plus attrayant pour les utilisateurs, en leur permettant de visualiser la progression de la recherche dans un format plus accessible.
 
 
@@ -101,80 +326,87 @@ Dans ce rapport, nous avons choisi d'implémenter la solution du problème des m
 
 \begin{lstlisting}[language=Python, caption=Code Python]
 
-    import copy
+import copy
 
-    n = int(input("Entrez le nombre de missionnaires et de cannibales: "))
-    p = int(input("Entrez la capacité de la bateau : "))
+n = int(input("Entrez le nombre de missionnaires et de cannibales : "))
+p = int(input("Entrez la capacite de la bateau : "))
 
-    start = [n, n, 1]
-    size = n
-    possible_actions = []
+start = [n, n, 1]
+size = n
+possible_actions = []
 
-    while p <= n:
-        for i in range(p + 1):
-            for j in range(p - i + 1):
-                if i + j <= p:
-                    possible_actions.append([i, j, 1])
-        p += 1
-    
-    def suppr(vec1, vec2):
-        return [vec1[i] - vec2[i] for i in range(3)]
-    
-    def add(vec1, vec2):
-        return [vec1[i] + vec2[i] for i in range(3)]
-    
-    def v_add(vec):
-        actions = [] 
-        for action in possible_actions:
+for i in range(p + 1):
+    for j in range(p - i + 1):
+        if i + j <= p:
+            possible_actions.append([i, j, 1])
+
+memo = []
+solution = 0
+
+def suppr(vec1, vec2):
+    return [vec1[i] - vec2[i] for i in range(3)]
+
+def add(vec1, vec2):
+    return [vec1[i] + vec2[i] for i in range(3)]
+
+def v_add(vec):
+    actions = [] 
+    for action in possible_actions:
+        if action[0] + action[1] >= 1:
             x = add(vec, action) 
+            y = suppr([size, size, 1], x) 
             if x[0] >= 0 and x[1] >= 0 and x[0] <= size and x[1] <= size and (x[0] >= x[1] or x[0] == 0) and (y[0] >= y[1] or y[0] == 0):
                 actions.append(action)        
-        return actions 
-        
-    def v_suppr(vec):
-        actions = []
-        for action in possible_actions:
+    return actions 
+
+def v_suppr(vec):
+    actions = []
+    for action in possible_actions:
+        if action[0] + action[1] >= 1: 
             x = suppr(vec, action)
             y = suppr([size, size, 1], x)
             if x[0] >= 0 and x[1] >= 0 and x[0] <= size and x[1] <= size and (x[0] >= x[1] or x[0] == 0) and (y[0] >= y[1] or y[0] == 0):
                 actions.append(action)
-        return actions
-    
-    def tree_search(vec, moves):
-        global solution
-    
-        if vec in memo:
-            return
-        else:
-            memo.append(vec)
-    
-        moves = copy.deepcopy(moves)
-        moves += 1
-    
-        if vec[2] == 0: 
-            actions = v_add(vec)
-        else:
-            actions = v_suppr(vec)
-    
-        for action in actions:
-            new_vec = copy.deepcopy(vec)
-            for i in range(3):
-                if new_vec[2] == 0:
-                    new_vec[i] += action[i]
-                else:
-                    new_vec[i] -= action[i]
-            if sum(new_vec) == 0:
-                print("Etape Finale", moves, "=", [new_vec[0], new_vec[1], new_vec[2], size-new_vec[0], size-new_vec[1]])
-                solution = moves
-                return True
-            if tree_search(new_vec, moves):
-                print("Etape",moves, "=", [new_vec[0], new_vec[1], new_vec[2], size-new_vec[0], size-new_vec[1]])
-                return True
-        return False
-    
-    tree_search(start, 0)
-    
-    print("Le nombre d'etape totale est de =", solution)
+    return actions
+
+def tree_search(vec, moves):
+    global solution
+
+    if vec in memo:
+        return
+    else:
+        memo.append(vec)
+
+    moves = copy.deepcopy(moves)
+    moves += 1
+
+    if vec[2] == 0: 
+        actions = v_add(vec)
+    else:
+        actions = v_suppr(vec)
+
+    for action in actions:
+        new_vec = copy.deepcopy(vec)
+        for i in range(3):
+            if new_vec[2] == 0:
+                new_vec[i] += action[i]
+            else:
+                new_vec[i] -= action[i]
+        if sum(new_vec) == 0:
+            print("Etape Finale", moves, "=", [new_vec[0], new_vec[1], new_vec[2], size-new_vec[0], size-new_vec[1]])
+            solution = moves
+            return True
+        if tree_search(new_vec, moves):
+            print("Etape",moves, "=", [new_vec[0], new_vec[1], new_vec[2], size-new_vec[0], size-new_vec[1]])
+            return True
+    return False
+
+tree_search(start, 0)
+
+print("Le nombre d'etape totale est de =", solution)
+
+
+
     
     
     

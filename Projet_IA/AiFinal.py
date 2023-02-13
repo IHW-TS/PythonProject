@@ -1,5 +1,6 @@
 # "copy" permet de copier des objets en Python sans les lier à leur source.
 import copy
+import time
 
 # Entrer le nombre de missionnaires et de cannibales ainsi que la capacité de la barque
 n = int(input("Entrez le nombre de missionnaires et de cannibales: "))
@@ -15,12 +16,12 @@ possible_actions = []
 # Lorsque toutes les combinaisons possibles ont été ajoutées, la barque peut prendre une capacité supplémentaire et la boucle recommence jusqu'à ce que toutes les combinaisons aient été ajoutées pour une capacité maximale égale au nombre total de missionnaires et de cannibales.
 # La liste possible_actions est utilisée pour vérifier si une action est valide à chaque étape de la résolution du problème.
 
-while p <= n:
-    for i in range(p + 1):
-        for j in range(p - i + 1):
-            if i + j <= p:
-                possible_actions.append([i, j, 1])
-    p += 1
+
+for i in range(p + 1):
+    for j in range(p - i + 1):
+        if i + j <= p:
+            possible_actions.append([i, j, 1])
+
 
 # "Memo" est une liste qui est utilisée pour stocker les différents états du bateau rencontrés lors de l'exécution de l'algorithme. Cela permet d'éviter de refaire les mêmes étapes plusieurs fois, ce qui accélère l'algorithme. Si un état donné a déjà été vu, l'algorithme ne le considérera pas à nouveau, ce qui évite les boucles infinies et améliore les performances du programme.
 # Par exemple, considérons que nous cherchons à déplacer 3 missionnaires et 3 cannibales d'une rive à l'autre en utilisant un bateau qui ne peut transporter qu'une ou deux personnes à la fois. L'algorithme va explorer toutes les possibilités pour trouver la solution optimale en termes de nombre de déplacements de bateau. Si l'algorithme rencontre déjà un état où 2 missionnaires et 1 cannibale sont sur la rive gauche, il n'a plus besoin de recommencer à partir de cet état, car il a déjà été exploré. Au lieu de cela, l'algorithme peut simplement enregistrer cet état dans la liste "memo" et continuer à explorer les autres possibilités.
@@ -46,7 +47,7 @@ def v_add(vec):
     # Pour chaque action dans la liste des actions possibles
     for action in possible_actions:
         # vérifie si la somme des deux premiers éléments de la liste "action" est supérieure ou égale à 2. En d'autres termes, cela signifie que la barque doit prendre au moins 2 personnes, missionnaires ou cannibales, à chaque tour. Si la somme est supérieure ou égale à 2, alors la liste "action" est ajoutée à la liste "possible_actions".
-        if action[0] + action[1] >= 2:
+        if action[0] + action[1] >= 1:
         # Calcule la nouvelle situation après l'exécution de cette action. Ici on appelle la fonction add avec en paramètre vec qui a les qui prends l'etat inital (barque, misionnaires, cannibales), et action qui va représenter une aciton possible a effectuer. Ainsi add est un nouveau vecteur qui représente l'état résultant de l'exécution de l'action.
             x = add(vec, action) 
         # Le nombre de missionnaires et de cannibales sur l'autre rive est calculé en utilisant la fonction suppr avec [size, size, 1] ( on aurait pu ecrire [3, 3, 1]) comme vecteur de soustraction.
@@ -71,7 +72,7 @@ def v_add(vec):
 def v_suppr(vec):
     actions = []
     for action in possible_actions:
-        if action[0] + action[1] >= 2: 
+        if action[0] + action[1] >= 1: 
         # Suppr au lieu de add
             x = suppr(vec, action)
             y = suppr([size, size, 1], x)
