@@ -1,6 +1,5 @@
 # "copy" permet de copier des objets en Python sans les lier à leur source.
 import copy
-import time
 
 # Entrer le nombre de missionnaires et de cannibales ainsi que la capacité de la barque
 n = int(input("Entrez le nombre de missionnaires et de cannibales: "))
@@ -10,11 +9,6 @@ start = [n, n, 1]
 # On définit la taille de la liste "possible_actions" en prenant le nombre maximal de missionnaires et cannibales
 size = n
 possible_actions = []
-#Tant que p est inférieur ou égal à n, on exécute la boucle suivante 
-# Le nombre de missionnaires et de cannibales dans la barque est représenté par i et j respectivement.
-# La variable "p" représente la capacité maximale de la barque. La boucle interne (for j in range(p - i + 1)) calcule le nombre maximum de cannibales que la barque peut transporter en fonction de la capacité maximale et du nombre de missionnaires déjà présents dans la barque. La boucle ajoute ensuite cette combinaison de missionnaires et de cannibales dans l'ensemble d'actions possibles pour la barque.
-# Lorsque toutes les combinaisons possibles ont été ajoutées, la barque peut prendre une capacité supplémentaire et la boucle recommence jusqu'à ce que toutes les combinaisons aient été ajoutées pour une capacité maximale égale au nombre total de missionnaires et de cannibales.
-# La liste possible_actions est utilisée pour vérifier si une action est valide à chaque étape de la résolution du problème.
 
 
 for i in range(p + 1):
@@ -47,7 +41,7 @@ def v_add(vec):
     # Pour chaque action dans la liste des actions possibles
     for action in possible_actions:
         # vérifie si la somme des deux premiers éléments de la liste "action" est supérieure ou égale à 2. En d'autres termes, cela signifie que la barque doit prendre au moins 2 personnes, missionnaires ou cannibales, à chaque tour. Si la somme est supérieure ou égale à 2, alors la liste "action" est ajoutée à la liste "possible_actions".
-        if action[0] + action[1] >= 1:
+        if action[0] + action[1] >= 2:
         # Calcule la nouvelle situation après l'exécution de cette action. Ici on appelle la fonction add avec en paramètre vec qui a les qui prends l'etat inital (barque, misionnaires, cannibales), et action qui va représenter une aciton possible a effectuer. Ainsi add est un nouveau vecteur qui représente l'état résultant de l'exécution de l'action.
             x = add(vec, action) 
         # Le nombre de missionnaires et de cannibales sur l'autre rive est calculé en utilisant la fonction suppr avec [size, size, 1] ( on aurait pu ecrire [3, 3, 1]) comme vecteur de soustraction.
@@ -72,7 +66,7 @@ def v_add(vec):
 def v_suppr(vec):
     actions = []
     for action in possible_actions:
-        if action[0] + action[1] >= 1: 
+        if action[0] + action[1] >= 2: 
         # Suppr au lieu de add
             x = suppr(vec, action)
             y = suppr([size, size, 1], x)
