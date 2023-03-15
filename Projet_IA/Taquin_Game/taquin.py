@@ -2,6 +2,7 @@ import heapq # Import du module heapq pour utiliser une file de priorité
 from collections import deque # Import du module deque pour utiliser une liste doublement chaînée
 import time # Import du module time pour mesurer le temps d'exécution
 import os # Import du module os pour mesurer le temps CPU
+from random import shuffle
 
 # Définition de la classe Taquin
 class Taquin:
@@ -101,15 +102,14 @@ def solve_taquin(initial_state, final_state, heuristic):
     return None, num_explored # Retourne None si la solution n'a pas été trouvée, sinon la liste des mouvements et le nombre d'états explorés
 
 
-# Fonction pour générer un état initial et final de Taquin de taille donnée
+def generate_random_state(size):
+    state = list(range(size * size))
+    shuffle(state)
+    return [state[i * size:(i + 1) * size] for i in range(size)]
+
 def generate_states(size):
-    # Crée un état initial de Taquin avec des nombres allant de 0 à size*size-1
-    initial_state = [[(i * size + j) % (size * size) for j in range(size)] for i in range(size)]
-    
-    # Crée un état final de Taquin en décalant tous les nombres de 1 et en ramenant le dernier nombre à 0
+    initial_state = generate_random_state(size)
     final_state = [[(i * size + j + 1) % (size * size) for j in range(size)] for i in range(size)]
-    final_state[-1][-1] = 0
-    
     return initial_state, final_state
 
 # Fonction pour afficher l'état actuel du Taquin

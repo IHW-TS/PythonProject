@@ -2,6 +2,8 @@ import heapq
 from collections import deque
 import time
 import os 
+from random import shuffle
+
 
 class Taquin:
     def __init__(self, state, parent=None, move=None, g=0):
@@ -89,8 +91,13 @@ def solve_taquin(initial_state, final_state, heuristic):
 
     return None, num_explored
 
+def generate_random_state(size):
+    state = list(range(size * size))
+    shuffle(state)
+    return [state[i * size:(i + 1) * size] for i in range(size)]
+
 def generate_states(size):
-    initial_state = [[(i * size + j) % (size * size) for j in range(size)] for i in range(size)]
+    initial_state = generate_random_state(size)
     final_state = [[(i * size + j + 1) % (size * size) for j in range(size)] for i in range(size)]
     return initial_state, final_state
 
