@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Taquin Solver</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <h1>Taquin Solver</h1>
+    <p>Veuillez entrer les informations suivantes :</p>
+    <form id="taquin-form">
+      <label for="size-input">Taille du taquin (par exemple, 3 pour un taquin 3x3) :</label>
+      <input type="number" id="size-input" name="size" required><br><br>
+      <label for="heuristic-input">Poids à utiliser (1-6) :</label>
+      <input type="number" id="heuristic-input" name="heuristic" required><br><br>
+      <input type="submit" value="Résoudre le taquin">
+    </form>
+    <div id="solution"></div>
+    <script>
+      // Fonction pour afficher le résultat de la résolution du taquin
+      function displaySolution(solution, numExplored, executionTime) {
+        const solutionDiv = document.getElementById("solution");
+        if (solution) {
+          const solutionStr = `Solution pour heuristique h${heuristic}: ${solution.join(" ")}`;
+          solutionDiv.innerHTML = `
+            <p>Nombre d'états explorés: ${numExplored}</p>
+            <p>Nombre de coups joués: ${solution.length}</p>
+            <p>${solutionStr}</p>
+            <p>Temps d'exécution: ${executionTime.toFixed(2)} millisecondes</p>
+            <p>Temps CPU: ${(performance.now() - startTime).toFixed(2)} millisecondes</p>
+          `;
+        } else {
+          solutionDiv.innerHTML = "<p>Aucune solution trouvée.</p>";
+        }
+      }
+
+      // Fonction pour soumettre le formulaire
+      function handleSubmit(event) {
+        event.preventDefault();
+        const sizeInput = document.getElementById("size-input");
+        const heuristicInput = document.getElementById("heuristic-input");
+        const size = parseInt(sizeInput.value);
+        const heuristic = parseInt(heuristicInput.value);
+        const [initialState, finalState] = generateStates(size);
+        const [solution, numExplored] = solveTaquin(initialState, finalState, heuristic);
+        const executionTime = performance.now() - startTime;
+        displaySolution(solution, numExplored, executionTime);
+      }
+
+      // Ajouter un événement de soumission au formulaire
+      const form = document.getElementById("taquin-form");
+      form.addEventListener("submit", handleSubmit);
+    </script>
+    <script src="script.js"></script>
+  </body>
+</html>
