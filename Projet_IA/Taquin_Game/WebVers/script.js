@@ -1,3 +1,4 @@
+
 class Taquin {
     constructor(state, parent = null, move = null, g = 0) {
         this.state = state;
@@ -110,82 +111,257 @@ class Taquin {
             return 0;
         }
     }
+
+
+
 }
 function solveTaquin(initialState, finalState, heuristic) {
     const initialTaquin = new Taquin(initialState);
     const frontier = [[initialTaquin.f(heuristic), initialTaquin]];
     const explored = new Set();
     let numExplored = 0;
-  
+
     while (frontier.length > 0) {
-      frontier.sort(([f1], [f2]) => f1 - f2);
-      const [_, current] = frontier.shift();
-      if (JSON.stringify(current.state) === JSON.stringify(finalState)) {
-        const solution = [];
-        let node = current;
-        while (node.parent) {
-          solution.unshift(node.move);
-          node = node.parent;
+        frontier.sort(([f1], [f2]) => f1 - f2);
+        const [_, current] = frontier.shift();
+        if (JSON.stringify(current.state) === JSON.stringify(finalState)) {
+            const solution = [];
+            let node = current;
+            while (node.parent) {
+                solution.unshift(node.move);
+                node = node.parent;
+            }
+            return [solution, numExplored];
         }
-        return [solution, numExplored];
-      }
-  
-      explored.add(JSON.stringify(current.state));
-      numExplored++;
-  
-      for (const neighbor of current.getNeighbors()) {
-        if (!explored.has(JSON.stringify(neighbor.state))) {
-          frontier.push([neighbor.f(heuristic), neighbor]);
+
+        explored.add(JSON.stringify(current.state));
+        numExplored++;
+
+        for (const neighbor of current.getNeighbors()) {
+            if (!explored.has(JSON.stringify(neighbor.state))) {
+                frontier.push([neighbor.f(heuristic), neighbor]);
+            }
         }
-      }
     }
-  
+
     return [null, numExplored];
-  }
-  
-  function generateRandomState(size) {
+}
+
+
+function generateRandomState(size) {
     const state = Array.from({ length: size * size }, (_, i) => i);
     for (let i = state.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [state[i], state[j]] = [state[j], state[i]];
+        const j = Math.floor(Math.random() * (i + 1));
+        [state[i], state[j]] = [state[j], state[i]];
     }
     return Array.from({ length: size }, (_, i) =>
-      state.slice(i * size, (i + 1) * size)
+        state.slice(i * size, (i + 1) * size)
     );
-  }
-  
-  function generateStates(size) {
-    const initialState = generateRandomState(size);
+}
+
+function isSolvable(state) {
+    let inversions = 0;
+    const flattened = state.flat();
+    const size = state.length;
+
+    for (let i = 0; i < size * size - 1; i++) {
+        for (let j = i + 1; j < size * size; j++) {
+            if (flattened[i] && flattened[j] && flattened[i] > flattened[j]) {
+                inversions++;
+            }
+        }
+    }
+
+    if (size % 2 === 1) {
+        return inversions % 2 === 0;
+    } else {
+        const blankRow = state.findIndex((row) => row.includes(0));
+        if (blankRow % 2 === 0) {
+            return inversions % 2 === 1;
+        } else {
+            return inversions % 2 === 0;
+        }
+    }
+}
+
+function generateStates(size) {
+    let initialState;
+    do {
+        initialState = generateRandomState(size);
+    } while (!isSolvable(initialState));
+
     const finalState = Array.from({ length: size }, (_, i) =>
-      Array.from({ length: size }, (_, j) => (i * size + j + 1) % (size * size))
+        Array.from({ length: size }, (_, j) => (i * size + j + 1) % (size * size))
     );
     return [initialState, finalState];
-  }
-  
-  function printTaquin(state) {
-    for (const row of state) {
-      console.log(row.join(" "));
+}
+
+
+
+function runTaquin(event) {
+    event.preventDefault(); // Ajoutez cette ligne pour empêcher le rafraîchissement de la page
+
+    const size = parseInt(document.getElementById("size").value);
+    const heuristic = parseInt(document.getElementById("heuristic").value);
+    const [initialState, finalState] = generateStates(size);
+
+    printTaquin("initialState", initialState);
+
+    const startTime = performance.now();
+    const [solution, numExplored] = solveTaquin(initialState, finalState, heuristic);
+    const executionTime = performance.now() - startTime;
+
+    if (solution) {
+        document.getElementById("numExplored").innerText = `${numExplored}`;
+        document.getElementById("numMoves").innerText = `${solution.length}`;
+        document.getElementById("heuristicSolution").innerText = /*h${heuristic}:*/ `${solution.join(" ")}`;
+        document.getElementById("executionTime").innerText = `${executionTime.toFixed(2)} ms`;
+        document.getElementById("cpuTime").innerText = `${(performance.now() - startTime).toFixed(2)} ms`;
+
+        printTaquin("finalState", finalState);
+        updateChart(numExplored, heuristic, executionTime);
     }
-    console.log();
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    const runButton = document.getElementById("runButton");
+    runButton.addEventListener("click", (event) => runTaquin(event)); // Passez l'événement à la fonction runTaquin
+});
+
+// fonction pour effet Blackhole 
+function setBlackHoleEffect() {
+    const emptyCells = document.querySelectorAll(".grid-item[data-empty='true'], .grid-item[data-empty='true'] ~ .grid-item");
+
+    if (emptyCells.length === 0) return;
+  
+    emptyCells.forEach((emptyCell) => {
+      emptyCell.addEventListener("mouseover", () => {
+        const parent = emptyCell.parentElement.parentElement;
+        const cells = parent.querySelectorAll(".grid-item:not([data-empty='true'])");
+        const emptyCellRect = emptyCell.getBoundingClientRect();
+  
+        cells.forEach((cell) => {
+          const cellRect = cell.getBoundingClientRect();
+          const dx = emptyCellRect.left - cellRect.left;
+          const dy = emptyCellRect.top - cellRect.top;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          const factor = Math.min(1, 100 / distance);
+  
+          cell.style.transform = `translate(${dx * factor}px, ${dy * factor}px) scale(${1 - factor * 0.5})`;
+          cell.style.opacity = 1 - factor;
+        });
+      });
+  
+      emptyCell.addEventListener("mouseout", () => {
+        const parent = emptyCell.parentElement.parentElement;
+        const cells = parent.querySelectorAll(".grid-item:not([data-empty='true'])");
+  
+        cells.forEach((cell) => {
+          cell.style.transform = 'translate(0, 0) scale(1)';
+          cell.style.opacity = '1';
+        });
+      });
+    });
   }
   
-  const size = parseInt(prompt("Veuillez entrer la taille du taquin (par exemple, 3 pour un taquin 3x3): "));
-  const [initialState, finalState] = generateStates(size);
   
-  console.log("État initial du taquin :");
-  printTaquin(initialState);
+
+// Affiche les différents Etats 
+function displayGrid(elementId, state) {
+    const container = document.getElementById(elementId);
+    container.innerHTML = "";
   
-  const heuristic = parseInt(prompt("Veuillez choisir le poids à utiliser (1-6): "));
+    const grid = document.createElement("div");
+    grid.className = "grid";
+    container.appendChild(grid);
   
-  const startTime = performance.now();
-  const [solution, numExplored] = solveTaquin(initialState, finalState, heuristic);
-  const executionTime = performance.now() - startTime;
+    let cellId = 1;
   
-  if (solution) {
-    console.log(`Nombre d'états explorés: ${numExplored}`);
-    console.log(`Nombre de coups joués: ${solution.length}`);
-    console.log(`Solution pour heuristique h${heuristic}: ${solution.join(" ")}`);
-    console.log(`Temps d'exécution: ${executionTime.toFixed(2)} millisecondes`);
-    console.log(`Temps CPU: ${(performance.now() - startTime).toFixed(2)} millisecondes`);
+    for (const row of state) {
+      const gridRow = document.createElement("div");
+      gridRow.className = "grid-row";
+      grid.appendChild(gridRow);
+  
+      for (const cell of row) {
+        const gridItem = document.createElement("div");
+        gridItem.className = "grid-item";
+        gridItem.textContent = cell === 0 ? " " : cell;
+        if (cell === 0) {
+          gridItem.setAttribute("data-empty", "true");
+        } else {
+          gridItem.id = `cell${cellId}`;
+          cellId++;
+        }
+        gridRow.appendChild(gridItem);
+      }
+    }
   }
   
+  
+  function printTaquin(elementId, state) {
+    displayGrid(elementId, state);
+    setBlackHoleEffect();
+}
+
+
+document.getElementById("initialStateButton").addEventListener("click", function () {
+    toggleVisibility("initialStateContainer");
+});
+
+document.getElementById("resultsButton").addEventListener("click", function () {
+    toggleVisibility("resultsContainer");
+});
+
+document.getElementById("finalStateButton").addEventListener("click", function () {
+    toggleVisibility("finalStateContainer");
+});
+
+function toggleVisibility(containerId) {
+    const container = document.getElementById(containerId);
+    container.hidden = !container.hidden;
+}
+
+
+// Affichage du graphique 
+
+let resultChart;
+
+function updateChart(numExplored, heuristic, executionTime) {
+    if (!resultChart) {
+        const chartElement = document.getElementById("resultChart");
+        resultChart = new Chart(chartElement, {
+            type: "bar",
+            data: {
+                labels: ["h1", "h2", "h3", "h4", "h5", "h6"],
+                datasets: [
+                    {
+                        label: "Nombre d'états explorés",
+                        data: [0, 0, 0, 0, 0, 0],
+                        backgroundColor: "rgba(75, 192, 192, 0.2)",
+                        borderColor: "rgba(75, 192, 192, 1)",
+                        borderWidth: 1,
+                    },
+                    {
+                        label: "Temps d'exécution (ms)",
+                        data: [0, 0, 0, 0, 0, 0],
+                        backgroundColor: "rgba(255, 99, 132, 0.2)",
+                        borderColor: "rgba(255, 99, 132, 1)",
+                        borderWidth: 1,
+                    },
+                ],
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+            },
+        });
+    }
+
+    resultChart.data.datasets[0].data[heuristic - 1] = numExplored;
+    resultChart.data.datasets[1].data[heuristic - 1] = executionTime;
+    resultChart.update();
+}
+

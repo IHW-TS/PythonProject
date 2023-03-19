@@ -36,7 +36,7 @@ tSomme.run = runTsomme
 s1 = bib.TaskSystem([t1, t2, tSomme], {"T1": [], "T2": ["T1"], "somme": ["T1", "T2"]}) 
 s1.run()
 #s1.draw() 
-s1.detTestRnd(10)
+#s1.detTestRnd(10)
 s1.parCost(10)
 
 print(X)

@@ -1,168 +1,107 @@
-#!/bin/python
-#-*-coding:utf-8-*-
- 
-import copy
- 
-# donnees des noeuds
-F, G, H, JEU, PAPA = 0, 1, 2, 3, 4
- 
-class Solveur :
-    '''
-    Le solveur de taquin
-    '''
- 
-    def __init__(self, taquin) :
-        self.openList = []
-        self.closedList = []
- 
-        self.taquinInitial = taquin
-        self.numeroCaseVide = taquin.numeroCaseVide
-        self.taille = len(taquin.jeu)
- 
-        # on met l'etat initial
-        self.openList.append([0, 0, 0, taquin.jeu, None])
- 
- 
-    def resoudre(self) :
-        print "Recherche de la solution..."
-        while len(self.openList) > 0 :
- 
-            noeudCourant = self.openList.pop(0)
-            taquin = noeudCourant[JEU]
- 
-            #self.closedList.append()
- 
-            if noeudCourant[JEU] == self.taquinInitial.jeuTrie :
-                return noeudCourant
- 
-            # ajout des possibilites ...
-            for ligne in range(0, self.taille) :
-                for colonne in range(0, self.taille) :
- 
-                    if colonne > 0 and taquin[ligne][colonne-1] == self.numeroCaseVide :
-                        tq = copy.deepcopy(taquin)
-                        tq[ligne][colonne], tq[ligne][colonne-1] = tq[ligne][colonne-1], tq[ligne][colonne]
-                        g = noeudCourant<strong>+1
-                        h = self.heuristique(tq)
-                        if not tq in self.closedList :
-                            i = self.indiceDansListeOuverte(tq)
-                            if i == -1 :
-                                self.openList.append([g+h, g, h, tq, noeudCourant])
-                            elif g+h < self.openList<em>[F] :
-                                self.openList[i] = [g+h, g, h, tq, noeudCourant]
- 
-                    if colonne < self.taille - 1 and taquin[ligne][colonne+1] == self.numeroCaseVide :
-                        tq = copy.deepcopy(taquin)
-                        tq[ligne][colonne], tq[ligne][colonne+1] = tq[ligne][colonne+1], tq[ligne][colonne]
-                        g = noeudCourant[G]+1
-                        h = self.heuristique(tq)
-                        if not tq in self.closedList :
-                            i = self.indiceDansListeOuverte(tq)
-                            if i == -1 :
-                                self.openList.append([g+h, g, h, tq, noeudCourant])
-                            elif g+h < self.openList[i][F] :
-                                self.openList[i] = [g+h, g, h, tq, noeudCourant]
- 
-                    if ligne > 0 and taquin[ligne-1][colonne] == self.numeroCaseVide :
-                        tq = copy.deepcopy(taquin)
-                        tq[ligne][colonne], tq[ligne-1][colonne] = tq[ligne-1][colonne], tq[ligne][colonne]
-                        g = noeudCourant[G]+1
-                        h = self.heuristique(tq)
-                        if not tq in self.closedList :
-                            i = self.indiceDansListeOuverte(tq)
-                            if i == -1 :
-                                self.openList.append([g+h, g, h, tq, noeudCourant])
-                            elif g+h < self.openList[i][F] :
-                                self.openList[i] = [g+h, g, h, tq, noeudCourant]
- 
-                    if ligne < self.taille - 1 and taquin[ligne+1][colonne] == self.numeroCaseVide :
-                        tq = copy.deepcopy(taquin)
-                        tq[ligne][colonne], tq[ligne+1][colonne] = tq[ligne+1][colonne], tq[ligne][colonne]
-                        g = noeudCourant[G]+1
-                        h = self.heuristique(tq)
-                        if not tq in self.closedList :
-                            i = self.indiceDansListeOuverte(tq)
-                            if i == -1 :
-                                self.openList.append([g+h, g, h, tq, noeudCourant])
-                            elif g+h < self.openList[i][F] :
-                                self.openList[i] = [g+h, g, h, tq, noeudCourant]
- 
-            self.openList.sort()
- 
-        print None
- 
- 
-    def indiceDansListeOuverte(self, jeu) :
-        for i in range(0, len(self.openList)) :
-            if self.openList[i][3] == jeu :
-                return i
-        return -1
- 
- 
-    def heuristique(self, taquin) :
-        i = 0
-        for ligne in range(0, self.taille) :
-            for colonne in range(0, self.taille) :
-                if taquin[ligne][colonne] != self.taquinInitial.jeuTrie[ligne][colonne] :
-                    i += 1
-        return i
- 
- 
-class Taquin :
-    '''
-    Le jeu en lui meme
-    '''
- 
-    def __init__(self, jeu = None) :
-        if jeu != None :
-            self.setJeu(jeu)
- 
-    def __repr__(self) :
-        return 'n'.join( ''.join(str(i)) for i in self.jeu )
- 
-    def setJeu(self, jeu) :
-        self.jeu = [ list(i) for i in jeu ]
-        self.numeroCaseVide = len(self.jeu) - 1
- 
-        self.jeuTrie = [ [] for i in range(len(self.jeu)) ] # pour ne pas le recalculer a chaque fois
-        for i in range(len(self.jeu)) :
-            self.jeuTrie[i] = [ j for j in range(len(self.jeu)*i, len(self.jeu)*i + len(self.jeu)) ]
- 
-    def setNumeroCaseVide(self, i) :
-        self.numeroCaseVide = i
- 
-    def printEtatFini(self) :
-        print 'n' + 'n'.join( ''.join(str(i)) for i in self.jeuTrie )
- 
-    def termine(self) :
-        return [ i for i in self.jeu ] == self.jeuTrie
- 
-    def resoudre(self) :
-        solveur = Solveur(self)
-        res = solveur.resoudre()
-        if res == None :
-            print "Pas de solution trouvee"
-            return
-        print "Solution trouvee"
- 
-        L = []
-        while res[PAPA] != None :
-            L.append(res[PAPA][JEU])
-            res = res[PAPA]
-        L.reverse()
- 
-        for elem in L :
-            print 'n' + 'n'.join( ''.join(str(i)) for i in elem )
-        self.printEtatFini()
- 
-'''
-6 3 1
-8 0 2
-7 4 5
-'''
- 
-if __name__ == "__main__" :
-    tq = Taquin()
-    tq.setJeu( [ [6, 3, 1], [8, 0, 2], [7, 4, 5] ] )
-    tq.setNumeroCaseVide(2)
-    tq.resoudre()
+import random
+import heapq
+import time
+
+
+class Taquin:
+    def __init__(self, environnement, heuristique, parent=None, mouvement=None):
+        self.environnement = environnement
+        self.parent = parent
+        self.mouvement = mouvement
+        self.h = 0
+        if parent is None:
+            self.g = 0
+            self.chemin = ""
+        else:
+            self.chemin = parent.chemin + self.mouvement
+            self.g = parent.g + 1
+        self.f = self.h + self.g
+        self.final = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+        self.heuristique = heuristique
+        self.heuristiqueFonction()
+
+
+    def heuristiqueFonction(self):
+        poids = [
+            [36, 12, 12, 4, 1, 1, 4, 0],  # π1
+            [8, 7, 6, 5, 4, 3, 2, 1],  # π2 = π3
+            [8, 7, 6, 5, 4, 3, 2, 1],  # π4 = π5
+            [1, 1, 1, 1, 1, 1, 1, 1],  # π6
+        ]
+        normalization = [4, 1, 1, 4, 4, 1]  # p1, p2, p3, p4, p5, p6
+
+        distance = 0
+        for i in range(9):
+            if self.environnement[i] != self.final[i] and self.environnement[i] != 8:
+                distance += poids[self.heuristique - 1][self.environnement[i]] * abs(self.environnement[i] // 3 - i // 3) + abs(
+                    self.environnement[i] % 3 - i % 3)
+
+        distance //= normalization[self.heuristique - 1]
+        self.h = distance
+        self.f = self.h + self.g
+
+    def voisins(self):
+        voisins = []
+        index_vide = self.environnement.index(8)
+
+        mouvements = {
+            'N': (index_vide - 3, 'N'),
+            'S': (index_vide + 3, 'S'),
+            'E': (index_vide + 1, 'E') if (index_vide + 1) % 3 != 0 else None,
+            'O': (index_vide - 1, 'O') if (index_vide - 1) % 3 != 2 else None
+        }
+
+        for direction, mouvement in mouvements.items():
+            if mouvement is not None and 0 <= mouvement[0] < 9:
+                nouvel_environnement = self.environnement.copy()
+                nouvel_environnement[index_vide], nouvel_environnement[mouvement[0]] = nouvel_environnement[mouvement[0]], nouvel_environnement[index_vide]
+                voisins.append(Taquin(nouvel_environnement, self.heuristique, self, mouvement[1]))
+
+        return voisins
+
+    def __str__(self):
+        return str(self.environnement)
+
+    def __eq__(self, other):
+        if isinstance(other, Taquin):
+            return self.environnement == other.environnement
+        return False
+
+    def __lt__(self, other):
+        if isinstance(other, Taquin):
+            return self.f < other.f
+        return False
+
+    @staticmethod
+    def astar(taquin_initial):
+        frontiere = [taquin_initial]
+        explore = set()
+        while frontiere:
+            current = heapq.heappop(frontiere)
+            if current.environnement == current.final:
+                return current.chemin
+            explore.add(tuple(current.environnement))
+
+            for voisin in current.voisins():
+                if tuple(voisin.environnement) not in explore:
+                    heapq.heappush(frontiere, voisin)
+
+def main():
+    environnement_initial = [1, 2, 5, 3, 4, 0, 6, 7, 8]
+    heuristique = 1 # Choisir l'heuristique (1 à 6)
+
+    taquin_initial = Taquin(environnement_initial, heuristique)
+    start_time = time.time()
+    solution = Taquin.astar(taquin_initial)
+    end_time = time.time()
+
+    if solution:
+        print("Solution trouvée:", solution)
+        print("Longueur de la solution:", len(solution))
+    else:
+        print("Aucune solution trouvée.")
+    print("Temps de calcul:", end_time - start_time, "secondes")
+
+
+if __name__ == "__main__":
+    main()

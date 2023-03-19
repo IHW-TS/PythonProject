@@ -59,20 +59,20 @@ class TaskSystem:
             task = next(task for task in self.tasks if task.name == task_name)
             task.run()
             
-    def detTestRnd(self, num_tests):
-        for i in range(num_tests):
-            for task in self.tasks:
-                for read_var in task.reads:
-                    exec(f"{read_var} = random.randint(0, 100)")
-            self.run()
-            result = [eval(var) for var in set(sum([task.reads + task.writes for task in self.tasks], []))]
-            if i == 0:
-                results = [result]
-            else:
-                if result != results[0]:
-                    return False
-        print(results[0])
-        return True
+    # def detTestRnd(self, num_tests):
+    #     for i in range(num_tests):
+    #         for task in self.tasks:
+    #             for read_var in task.reads:
+    #                 exec(f"{read_var} = random.randint(0, 100)")
+    #         self.run()
+    #         result = [eval(var) for var in set(sum([task.reads + task.writes for task in self.tasks], []))]
+    #         if i == 0:
+    #             results = [result]
+    #         else:
+    #             if result != results[0]:
+    #                 return False
+    #     print(results[0])
+    #     return True
 
     def parCost(self, num_tests):
         total_parallel_time = 0

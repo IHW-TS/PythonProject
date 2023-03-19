@@ -1,56 +1,102 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Taquin Solver</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h1>Taquin Solver</h1>
-    <p>Veuillez entrer les informations suivantes :</p>
-    <form id="taquin-form">
-      <label for="size-input">Taille du taquin (par exemple, 3 pour un taquin 3x3) :</label>
-      <input type="number" id="size-input" name="size" required><br><br>
-      <label for="heuristic-input">Poids à utiliser (1-6) :</label>
-      <input type="number" id="heuristic-input" name="heuristic" required><br><br>
-      <input type="submit" value="Résoudre le taquin">
-    </form>
-    <div id="solution"></div>
-    <script>
-      // Fonction pour afficher le résultat de la résolution du taquin
-      function displaySolution(solution, numExplored, executionTime) {
-        const solutionDiv = document.getElementById("solution");
-        if (solution) {
-          const solutionStr = `Solution pour heuristique h${heuristic}: ${solution.join(" ")}`;
-          solutionDiv.innerHTML = `
-            <p>Nombre d'états explorés: ${numExplored}</p>
-            <p>Nombre de coups joués: ${solution.length}</p>
-            <p>${solutionStr}</p>
-            <p>Temps d'exécution: ${executionTime.toFixed(2)} millisecondes</p>
-            <p>Temps CPU: ${(performance.now() - startTime).toFixed(2)} millisecondes</p>
-          `;
-        } else {
-          solutionDiv.innerHTML = "<p>Aucune solution trouvée.</p>";
-        }
-      }
+    <div class="parentWrapper">
+      <div class="parentWrapperTop">
+        <div class="wrapper">
+          <h1>Taquin Solveur</h1>
+          <div class="container">
+            <div class="left-section">
+              <form>
+                <div>
+                  <label for="size">Taille du taquin :</label>
+                  <input type="number" id="size" value="3" min="2" />
+                </div>
+                <div>
+                  <label for="heuristic">Poids heuristique (1-6) :</label>
+                  <input
+                    type="number"
+                    id="heuristic"
+                    value="1"
+                    min="1"
+                    max="6"
+                  />
+                </div>
+                <button id="runButton">Exécuter</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="wrapper2">
+          <div class="right-section">
+            <div class="buttons">
+              <button class="result-button" id="initialStateButton">
+                État initial du taquin
+              </button>
+              <button class="result-button" id="resultsButton">
+                Résultats
+              </button>
+            </div>
+            <div class="results-section">
+              <div
+                id="initialStateContainer"
+                class="result-container rounded-element"
+                hidden
+              >
+                <div id="initialState"></div>
+              </div>
+              <div id="resultsContainer" class="result-container" hidden>
+                <div class="results">
+                  <div class="result">
+                    <span class="label">Nombre d'états explorés :</span>
+                    <span id="numExplored"></span>
+                  </div>
+                  <div class="result">
+                    <span class="label">Nombre de coups joués :</span>
+                    <span id="numMoves"></span>
+                  </div>
+                  <div class="result">
+                    <span class="label">Heuristique :</span>
+                    <span id="heuristicSolution"></span>
+                  </div>
+                  <div class="result">
+                    <span class="label">Temps d'exécution :</span>
+                    <span id="executionTime"></span>
+                  </div>
+                  <div class="result">
+                    <span class="label">Temps CPU :</span>
+                    <span id="cpuTime"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button class="result-button" id="finalStateButton">
+            État final du taquin
+          </button>
+          <div
+            id="finalStateContainer"
+            class="result-container rounded-element"
+            hidden
+          >
+            <div id="finalState"></div>
+          </div>
+        </div>
+      </div>
 
-      // Fonction pour soumettre le formulaire
-      function handleSubmit(event) {
-        event.preventDefault();
-        const sizeInput = document.getElementById("size-input");
-        const heuristicInput = document.getElementById("heuristic-input");
-        const size = parseInt(sizeInput.value);
-        const heuristic = parseInt(heuristicInput.value);
-        const [initialState, finalState] = generateStates(size);
-        const [solution, numExplored] = solveTaquin(initialState, finalState, heuristic);
-        const executionTime = performance.now() - startTime;
-        displaySolution(solution, numExplored, executionTime);
-      }
+      <div class="wrapper3">
+        <h2>Graphique des résultats</h2>
+        <canvas id="resultChart"></canvas>
+      </div>
+    </div>
 
-      // Ajouter un événement de soumission au formulaire
-      const form = document.getElementById("taquin-form");
-      form.addEventListener("submit", handleSubmit);
-    </script>
     <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </body>
 </html>
