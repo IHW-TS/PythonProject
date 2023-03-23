@@ -31,8 +31,10 @@ Développé en Python 3.6.0
 - Réalisation d'une structure de base pour mieux comprendre l'intérêt du projet => Très utile si vous ne comprenez rien au projet 
 - On peut remarquer 2 versions du programme : 
 ```python
-- Projet_SE_V1 : Fonctionne dans l'ensemble mais contient quelque bug => Fonction Test randomisé de déterminisme n'a pas été réalisé. Il existe aussi un version avec deux fichiers qui imposé par le sujet.
-- Projet_SE_V2 :  Tout fonction correctement 
+- Projet_SE_V1 : Fonctionne dans l'ensemble mais contient quelque bug.
+                 Fonction Test randomisé de déterminisme n'a pas été réalisé. 
+                 Il existe aussi un version avec deux fichiers qui imposé par le sujet.
+- Projet_SE_V2 : Tout fonction correctement 
 ```
 - 50% de la note final voir plus 
 
