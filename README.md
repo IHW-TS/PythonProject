@@ -6,12 +6,12 @@ Développé en Python 3.6.0
 
 ## Projet en IA
 
-### Projet d'échauffement "Missionnaire et Cannibale" 
+#### Projet d'échauffement "Missionnaire et Cannibale" 
 - Rechercher en profondeur => Problème : Affiche le premier chemin trouvé et non le plus court, le reste est correct. 
 - Compte rendu en LateX + étude expérimentale pas assez approfondie ( pas eu le temps), je recommande de faire un graphique et avec au moins 100 exécutions avec des valeurs différentes pour comparer le temps d'exécution du programme CPU etc... 
 - 25% de la Note Finale
 
-### Projet "Taquin"
+#### Projet "Taquin"
 
 - Tout est correct manque l'ajout d'une fonction de vérification pour l'état initial du Taquin
 - Ne fonctionne pas pour les tailles supérieures à 3x3
@@ -25,7 +25,7 @@ Développé en Python 3.6.0
 
 
 # Installation
-## Windows
+### Windows
 - Télécharger les dossiers pour les différents 
 - Si besoin, installer la dernière version de Python 3 sur 
 [le site officiel](https://www.python.org/downloads/windows/)
@@ -36,7 +36,7 @@ Développé en Python 3.6.0
 >>> sys.path.append('C:\Users\utilisateur\Documents\dossierContenanttaquinpy') #exemple
 ```
 
-## Linux
+### Linux
 - Idem
 - Ouvrir un terminal, aller dans le répertoire contenant `taquin.py` et lancer
 la commande `python`
