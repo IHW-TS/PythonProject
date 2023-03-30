@@ -1,3 +1,4 @@
+#tentative de correction mais le porgramme reste sur un boucle infinie 
 import random
 import heapq
 import time

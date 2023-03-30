@@ -1,3 +1,4 @@
+#tentative de resolution du porbleme de la boucle infinie en essayant un autre fonction def TrouverMouvement()
 import random
 import heapq
 

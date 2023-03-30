@@ -1,3 +1,4 @@
+#tentative de correction 3, pfff changement d'autre focntion la boule infinie persiste toujours, peut etre faut-il retravailler tout le raisonnement
 import random
 import heapq
 import time
