@@ -1,102 +1,59 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Taquin Solver</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="parentWrapper">
-      <div class="parentWrapperTop">
-        <div class="wrapper">
-          <h1>Taquin Solveur</h1>
-          <div class="container">
-            <div class="left-section">
-              <form>
-                <div>
-                  <label for="size">Taille du taquin :</label>
-                  <input type="number" id="size" value="3" min="2" />
-                </div>
-                <div>
-                  <label for="heuristic">Poids heuristique (1-6) :</label>
-                  <input
-                    type="number"
-                    id="heuristic"
-                    value="1"
-                    min="1"
-                    max="6"
-                  />
-                </div>
-                <button id="runButton">Exécuter</button>
-              </form>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taquin Futuriste</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mt-5 mb-5">Taquin Futuriste</h1>
+        <form id="taquinForm">
+            <div class="form-group">
+                <label for="size">Taille du taquin :</label>
+                <input type="number" class="form-control" id="size" value="3" min="2" max="5">
             </div>
-          </div>
+            <div class="form-group">
+                <label for="heuristic">Heuristique :</label>
+                <select class="form-control" id="heuristic">
+                    <option value="1">h1</option>
+                    <option value="2">h2</option>
+                    <option value="3">h3</option>
+                    <option value="4">h4</option>
+                    <option value="5">h5</option>
+                    <option value="6">h6</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary" id="runButton">Exécuter</button>
+        </form>
+        <div id="result" class="mt-5">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>État initial :</h3>
+                    <div id="initialState"></div>
+                </div>
+                <div class="col-md-6">
+                    <h3>État final :</h3>
+                    <div id="finalState"></div>
+                </div>
+            </div>
+            <div class="mt-5">
+                <h3>Statistiques :</h3>
+                <p>Nombre d'états explorés : <span id="numExplored"></span></p>
+                <p>Nombre de mouvements : <span id="numMoves"></span></p>
+                <p>Solution heuristique : <span id="heuristicSolution"></span></p>
+                <p>Temps d'exécution : <span id="executionTime"></span></p>
+                <p>Temps CPU : <span id="cpuTime"></span></p>
+            </div>
+            <div class="mt-5">
+                <h3>Graphique :</h3>
+                <canvas id="resultChart"></canvas>
+            </div>
         </div>
-        <div class="wrapper2">
-          <div class="right-section">
-            <div class="buttons">
-              <button class="result-button" id="initialStateButton">
-                État initial du taquin
-              </button>
-              <button class="result-button" id="resultsButton">
-                Résultats
-              </button>
-            </div>
-            <div class="results-section">
-              <div
-                id="initialStateContainer"
-                class="result-container rounded-element"
-                hidden
-              >
-                <div id="initialState"></div>
-              </div>
-              <div id="resultsContainer" class="result-container" hidden>
-                <div class="results">
-                  <div class="result">
-                    <span class="label">Nombre d'états explorés :</span>
-                    <span id="numExplored"></span>
-                  </div>
-                  <div class="result">
-                    <span class="label">Nombre de coups joués :</span>
-                    <span id="numMoves"></span>
-                  </div>
-                  <div class="result">
-                    <span class="label">Heuristique :</span>
-                    <span id="heuristicSolution"></span>
-                  </div>
-                  <div class="result">
-                    <span class="label">Temps d'exécution :</span>
-                    <span id="executionTime"></span>
-                  </div>
-                  <div class="result">
-                    <span class="label">Temps CPU :</span>
-                    <span id="cpuTime"></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <button class="result-button" id="finalStateButton">
-            État final du taquin
-          </button>
-          <div
-            id="finalStateContainer"
-            class="result-container rounded-element"
-            hidden
-          >
-            <div id="finalState"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="wrapper3">
-        <h2>Graphique des résultats</h2>
-        <canvas id="resultChart"></canvas>
-      </div>
     </div>
-
-    <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  </body>
+    <script src="script.js"></script>
+</body>
 </html>

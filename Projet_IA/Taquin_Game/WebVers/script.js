@@ -226,6 +226,7 @@ function runTaquin(event) {
 document.addEventListener("DOMContentLoaded", function () {
     const runButton = document.getElementById("runButton");
     runButton.addEventListener("click", (event) => runTaquin(event)); // Passez l'événement à la fonction runTaquin
+    updateChart(0, 0, 0);
 });
 
 // fonction pour effet Blackhole 
@@ -326,42 +327,41 @@ function toggleVisibility(containerId) {
 
 let resultChart;
 
-function updateChart(numExplored, heuristic, executionTime) {
-    if (!resultChart) {
-        const chartElement = document.getElementById("resultChart");
-        resultChart = new Chart(chartElement, {
-            type: "bar",
-            data: {
-                labels: ["h1", "h2", "h3", "h4", "h5", "h6"],
-                datasets: [
-                    {
-                        label: "Nombre d'états explorés",
-                        data: [0, 0, 0, 0, 0, 0],
-                        backgroundColor: "rgba(75, 192, 192, 0.2)",
-                        borderColor: "rgba(75, 192, 192, 1)",
-                        borderWidth: 1,
-                    },
-                    {
-                        label: "Temps d'exécution (ms)",
-                        data: [0, 0, 0, 0, 0, 0],
-                        backgroundColor: "rgba(255, 99, 132, 0.2)",
-                        borderColor: "rgba(255, 99, 132, 1)",
-                        borderWidth: 1,
-                    },
-                ],
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                    },
-                },
-            },
-        });
-    }
-
-    resultChart.data.datasets[0].data[heuristic - 1] = numExplored;
-    resultChart.data.datasets[1].data[heuristic - 1] = executionTime;
-    resultChart.update();
-}
-
+const chartData = {
+    labels: ['États explorés', 'Coups joués', 'Heuristique', 'Temps d\'exécution', 'Temps CPU'],
+    datasets: [{
+      label: 'Exemple de données',
+      data: [0, 0, 0, 0, 0],
+      backgroundColor: [
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+      ],
+      borderColor: [
+        'rgba(75, 192, 192, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(153, 102, 255, 1)',
+      ],
+      borderWidth: 1,
+    }]
+  };
+  
+  const chartConfig = {
+    type: 'bar',
+    data: chartData,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+    },
+  };
+  
+  const ctx = document.getElementById('chart').getContext('2d');
+  const chart = new Chart(ctx, chartConfig);
+  
