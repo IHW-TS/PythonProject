@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Taquin Solver</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-6">
+          <h1 class="text-right mt-4">Taquin Solveur</h1>
+        </div>
+        <div class="col-lg-6">
+          <div class="row">
+            <div class="col-lg-12 mt-4">
+              <div
+                id="initialStateContainer"
+                class="result-container rounded-element"
+                hidden
+              >
+                <h4>État initial du taquin</h4>
+                <div id="initialState"></div>
+              </div>
+              <div
+                id="finalStateContainer"
+                class="result-container rounded-element"
+                hidden
+              >
+                <h4>État final du taquin</h4>
+                <div id="finalState"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="form-group mt-4">
+            <label for="size">Taille du taquin :</label>
+            <input
+              type="number"
+              class="form-control"
+              id="size"
+              value="3"
+              min="2"
+            />
+          </div>
+          <div class="form-group">
+            <label for="heuristic">Poids heuristique (1-6) :</label>
+            <input
+              type="number"
+              class="form-control"
+              id="heuristic"
+              value="1"
+              min="1"
+              max="6"
+            />
+          </div>
+          <button id="runButton" class="btn btn-primary">Exécuter</button>
+        </div>
+        <div class="col-lg-6">
+          <div class="row">
+            <div class="col-lg-12 mt-4">
+              <h2>Graphique des résultats</h2>
+              <canvas id="resultChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6">
+          <div id="resultsContainer" class="result-container" hidden>
+            <h3 class="mt-4">Résultats</h3>
+            <div class="results">
+              <div class="result">
+                <span class="label">Nombre d'états explorés :</span>
+                <span id="numExplored"></span>
+              </div>
+              <div class="result">
+                <span class="label">Nombre de coups joués :</span>
+                <span id="numMoves"></span>
+              </div>
+              <div class="result">
+                <span class="label">Heuristique :</span>
+                <span id="heuristicSolution"></span>
+              </div>
+              <div class="result">
+                <span class="label"> Temps d'exécution :</span>
+                <span id="executionTime"></span>
+              </div>
+              <div class="result">
+                <span class="label">Temps CPU :</span>
+                <span id="cpuTime"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>

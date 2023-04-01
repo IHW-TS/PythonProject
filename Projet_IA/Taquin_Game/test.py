@@ -96,10 +96,33 @@ def generate_random_state(size):
     shuffle(state)
     return [state[i * size:(i + 1) * size] for i in range(size)]
 
+def is_valid_state(state):
+
+    size = len(state) 
+    flat_state = [cell for row in state for cell in row] 
+
+    expected_state = list(range(size * size))
+    expected_state[-1] = 0 
+
+    inversions = 0 
+
+    for i, cell in enumerate(flat_state):
+        for j in range(i + 1, size * size):
+            if flat_state[j] and flat_state[j] < cell:
+                inversions += 1 
+
+    if size % 2 == 1: 
+        return inversions % 2 == 0 
+    else: 
+        empty_row = next(i for i, row in enumerate(state) if 0 in row) 
+        return (inversions + empty_row) % 2 == 1 
+
 def generate_states(size):
-    initial_state = generate_random_state(size)
-    final_state = [[(i * size + j + 1) % (size * size) for j in range(size)] for i in range(size)]
-    return initial_state, final_state
+    initial_state = generate_random_state(size) 
+    while not is_valid_state(initial_state): 
+        initial_state = generate_random_state(size) 
+    final_state = [[(i * size + j + 1) % (size * size) for j in range(size)] for i in range(size)] 
+    return initial_state, final_state 
 
 def print_taquin(state):
     for row in state:
@@ -119,7 +142,7 @@ if __name__ == "__main__":
     solution, num_explored = solve_taquin(initial_state, final_state, heuristic)
     execution_time = time.time() - start_time
 
-    if solution:
+    if solution: 
         print(f"Nombre d'états explorés: {num_explored}")
         print(f"Nombre de coups joués: {len(solution)}")
         print(f"Solution pour heuristique h{heuristic}: {solution}")
@@ -136,8 +159,8 @@ if __name__ == "__main__":
         for move in solution:
             for neighbor in taquin_instance.get_neighbors():
                 if neighbor.move == move:
-                    taquin_instance = neighbor
+                    taquin_instance = neighbor 
                     break
-        print_taquin(taquin_instance.state)
-    else:
-        print(f"Pas de solution trouvée pour heuristique h{heuristic}.")
+        print_taquin(taquin_instance.state) 
+    else: 
+        print(f"Pas de solution trouvée pour heuristique h{heuristic}.") 
