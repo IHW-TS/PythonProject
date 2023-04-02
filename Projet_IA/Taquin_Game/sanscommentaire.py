@@ -100,17 +100,14 @@ def is_valid_state(state):
 
     size = len(state) 
     flat_state = [cell for row in state for cell in row] 
-
     expected_state = list(range(size * size))
     expected_state[-1] = 0 
-
     inversions = 0 
 
     for i, cell in enumerate(flat_state):
         for j in range(i + 1, size * size):
             if flat_state[j] and flat_state[j] < cell:
                 inversions += 1 
-
     if size % 2 == 1: 
         return inversions % 2 == 0 
     else: 
