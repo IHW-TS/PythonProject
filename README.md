@@ -16,11 +16,8 @@ Développé en Python 3.6.0
 #### Projet "Taquin"
 
 - Ennoncé du Sujet
-- Tout est correct manque l'ajout d'une fonction de vérification pour l'état initial du Taquin
-- Ne fonctionne pas pour les tailles supérieures à 3x3
-- Interface Graphique : Version Web => Amélioration de la présentation niveau disposition est affichage (HTML & CSS), La conversion du fichier taquin.py en JS est correcte.
-- Diaporama et Compte rendu en LateX (bientôt)
 - 50% de la Note Finale
+- **Pour avoir plus de détail sur le projet, il est disponible sur ce lien (contient le diaporama et le Rapport en Latex : *https://github.com/IHW-TS/Taquin_Game_IA* **
 
 ## Projet en SE
 
