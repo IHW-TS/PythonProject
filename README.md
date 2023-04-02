@@ -17,7 +17,7 @@ Développé en Python 3.6.0
 
 - Ennoncé du Sujet
 - 50% de la Note Finale
-- **Pour avoir plus de détail sur le projet, il est disponible sur ce lien (contient le diaporama et le Rapport en Latex : *https://github.com/IHW-TS/Taquin_Game_IA* **
+- **Pour avoir plus de détail sur le projet, il est disponible sur ce lien (contient le diaporama et le Rapport en Latex :** *https://github.com/IHW-TS/Taquin_Game_IA*
 
 ## Projet en SE
 
