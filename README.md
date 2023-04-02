@@ -16,8 +16,11 @@ Développé en Python 3.6.0
 #### Projet "Taquin"
 
 - Ennoncé du Sujet
+- Le programme Python est correct et fonctionne bien, comme indiqué précédemment. Il s'agit du même programme que celui présenté dans le lien ci-dessous.
 - **50%** de la Note Finale
-- **Pour avoir plus de détail sur le projet, il est disponible sur ce lien (contient le diaporama et le Rapport en Latex :** *https://github.com/IHW-TS/Taquin_Game_IA*
+- La version Web en Bootstrap et un brouillon, il ne fonctionne pas mais ca peut donner une idée de présentation.
+- **Pour avoir la version finale du projet (pour la version Web), il est disponible sur ce lien (contient le diaporama et le Rapport en Latex :** *https://github.com/IHW-TS/Taquin_Game_IA*
+- La Version Web contient également un graphique qui réalise une moyenne du temps d'exécution, du temps CPU et du temps d'exécution pour différentes heuristiques et tailles de Taquin. Ceci permet d'analyser les performances des différentes approches et de déterminer la meilleure heuristique pour résoudre le problème du Taquin.
 
 ## Projet en SE
 
