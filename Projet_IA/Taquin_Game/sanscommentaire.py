@@ -20,7 +20,6 @@ class Taquin:
             for i, row in enumerate(self.state):
                 for j, cell in enumerate(row):
                     if cell == 0:
-                        
                         x, y = i, j
                         break
                 if x is not None:
