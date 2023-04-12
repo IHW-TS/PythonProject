@@ -111,7 +111,7 @@ class TaskSystem:
 
     # Cette fonction compare les temps d'exécution en séquentiel et en parallèle
     def parCost(self):
-        num_runs = 10
+        num_runs = 100
         seq_times = []
         par_times = []
 
