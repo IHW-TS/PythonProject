@@ -1,14 +1,14 @@
-import task_system
+import maxpar
 import matplotlib.pyplot as plt
 
-def test_example_usage():
+def test_maxpar():
     # Création des tâches avec leurs dépendances et leurs fonctions de mise à jour
-    t1 = task_system.Task("T1", [], ["X"], lambda: task_system.runT1(s1))
-    t2 = task_system.Task("T2", [], ["Y"], lambda: task_system.runT2(s1))
-    tSomme = task_system.Task("somme", ["X", "Y"], ["Z"], lambda: task_system.runTsomme(s1))
+    t1 = maxpar.Task("T1", [], ["X"], lambda: maxpar.runT1(s1))
+    t2 = maxpar.Task("T2", [], ["Y"], lambda: maxpar.runT2(s1))
+    tSomme = maxpar.Task("somme", ["X", "Y"], ["Z"], lambda: maxpar.runTsomme(s1))
 
     # Création du système de tâches avec la liste des tâches et leurs relations de précédence
-    s1 = task_system.TaskSystem([t1, t2, tSomme], {"T1": [], "T2": ["T1"], "somme": ["T1", "T2"]})
+    s1 = maxpar.TaskSystem([t1, t2, tSomme], {"T1": [], "T2": ["T1"], "somme": ["T1", "T2"]})
     
     # Exécution séquentielle des tâches
     s1.runSeq()
@@ -29,4 +29,4 @@ def test_example_usage():
 
 # Appel de la fonction de test lors de l'exécution du fichier
 if __name__ == "__main__":
-    test_example_usage()
+    test_maxpar()

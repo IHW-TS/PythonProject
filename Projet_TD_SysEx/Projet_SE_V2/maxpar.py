@@ -79,35 +79,35 @@ class TaskSystem:
         nx.draw(self.graph, pos, with_labels=True, node_size=2000, node_color="skyblue", font_size=10, font_weight="bold")
         plt.show()
 
-    # Cette fonction teste le déterminisme du système en exécutant plusieurs fois avvec la condition de Bernstein 
+    # Cette fonction teste le déterminisme du système en exécutant plusieurs fois les tâches
 
     def detTestRnd(self, num_tests=100):
+        
         for _ in range(num_tests):
             # Générer des valeurs aléatoires pour les variables X, Y et Z
             self.X = random.randint(1, 100)
             self.Y = random.randint(1, 100)
             self.Z = random.randint(1, 100)
 
-            # Vérifier la condition de Bernstein
-            if self.X != self.Y and self.Y != self.Z and self.Z != self.X:
-                # Exécuter les tâches en parallèle avec le premier jeu de valeurs
-                self.run()
-                result1 = (self.X, self.Y, self.Z)
+            # Exécuter les tâches en parallèle avec le premier jeu de valeurs
+            self.run()
+            result1 = (self.X, self.Y, self.Z)
 
-                # Réinitialiser les variables avec les mêmes valeurs aléatoires
-                self.X = random.randint(1, 100)
-                self.Y = random.randint(1, 100)
-                self.Z = random.randint(1, 100)
+            # Réinitialiser les variables avec les mêmes valeurs aléatoires
+            self.X = random.randint(1, 100)
+            self.Y = random.randint(1, 100)
+            self.Z = random.randint(1, 100)
 
-                # Exécuter les tâches en parallèle avec le second jeu de valeurs
-                self.run()
-                result2 = (self.X, self.Y, self.Z)
+            # Exécuter les tâches en parallèle avec le second jeu de valeurs
+            self.run()
+            result2 = (self.X, self.Y, self.Z)
 
-                # Comparer les résultats des deux exécutions parallèles
-                if result1 != result2:
-                    print("Le système n'est pas déterministe")
-                    return
+            # Comparer les résultats des deux exécutions parallèles
+            if result1 != result2:
+                print("Le système n'est pas déterministe")
+                return
         print(f"Aucune indétermination détectée après {num_tests} tests")
+
 
 
     # Cette fonction compare les temps d'exécution en séquentiel et en parallèle
