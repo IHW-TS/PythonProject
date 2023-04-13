@@ -13,15 +13,15 @@ class Task:
     run = None
 
 class TaskSysteme:
-    def __init__(self, taches, parent):
-        self.taches = taches 
+    def __init__(self, task, parent):
+        self.task = task 
         self.parent = parent
 
 
     def validetask(self):
 
     
-    def getDependies(self, nomTache):
+    def getDependies(self):
      
 
     def runSeq(self):
