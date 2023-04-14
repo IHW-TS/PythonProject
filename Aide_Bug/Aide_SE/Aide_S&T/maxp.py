@@ -71,6 +71,7 @@ class TaskSystem:
             for dep in dependencies:
                 if dep not in noms_taches:
                     raise ValueError(f"La tâche '{dep}' citée dans les précédences de la tâche '{tache}' n'existe pas")
+                
 
     def graphique(self):
         A = nx.DiGraph()
