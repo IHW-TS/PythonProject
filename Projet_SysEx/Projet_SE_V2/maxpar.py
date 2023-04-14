@@ -94,7 +94,7 @@ class TaskSystem:
             # Générer des valeurs aléatoires pour les variables X, Y et Z
             self.X = random.randint(1, 100)
             self.Y = random.randint(1, 100)
-            self.Z = random.randint(1, 100)
+            self.Z = self.X + self.Y
 
             # Exécuter les tâches en parallèle avec le premier jeu de valeurs
             self.run()
@@ -103,7 +103,7 @@ class TaskSystem:
             # Réinitialiser les variables avec les mêmes valeurs aléatoires
             self.X = random.randint(1, 100)
             self.Y = random.randint(1, 100)
-            self.Z = random.randint(1, 100)
+            self.Z = self.X + self.Y
 
             # Exécuter les tâches en parallèle avec le second jeu de valeurs
             self.run()
@@ -141,11 +141,17 @@ class TaskSystem:
 
 # Fonctions de tâche en dehors de la classe TaskSystem
 
+
 def runT1(self):
     self.X = 1
+    # Pour savoir si la fonction detTestRnd() peut détecter si un système n'est pas déterministe
+    # self.X = random.randint(1, 10)
+
 
 def runT2(self):
     self.Y = 2
+    # self.Y = random.randint(1, 10)
+
 
 def runTsomme(self):
     self.Z = self.X + self.Y
