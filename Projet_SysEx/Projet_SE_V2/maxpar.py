@@ -6,7 +6,6 @@ import networkx as nx
 
 # La classe Task représente une tâche avec un nom, les ressources qu'elle lit et écrit, et une fonction pour exécuter la tâche
 
-
 class Task:
     def __init__(self, name, reads, writes, run):
         self.name = name
@@ -15,7 +14,6 @@ class Task:
         self.run = run
 
 # La classe TaskSystem représente un ensemble de tâches avec un graphe de précédence
-
 
 class TaskSystem:
     def __init__(self, tasks, precedence):
@@ -40,6 +38,7 @@ class TaskSystem:
                 raise ValueError(
                     f"Le nom de tâche {task_name} dans le dictionnaire de précédence n'est pas dans la liste des tâches")
 
+        # Vérification de la validité des dépendances de chaque tâche
         for dependencies in self.precedence.values():
             for dep in dependencies:
                 if dep not in task_names:
@@ -48,12 +47,16 @@ class TaskSystem:
 
     # Cette fonction construit le graphe de précédence à partir des informations fournies
     def build_graph(self):
+        # Crée un graphe orienté vide
         G = nx.DiGraph()
+        # Ajoute chaque tâche comme un nœud dans le graphe
         for task in self.tasks:
             G.add_node(task.name)
+            # Pour chaque dépendance de la tâche, ajoute un arc dans le graphe
             for dep in self.precedence[task.name]:
                 G.add_edge(dep, task.name)
         return G
+
 
     # Cette fonction retourne les dépendances d'une tâche spécifique
     def getDependencies(self, task_name):
@@ -68,16 +71,20 @@ class TaskSystem:
 
     # Cette fonction exécute les tâches en parallèle en utilisant des threads
     def run(self):
+        # Obtient une liste ordonnée des tâches en suivant l'ordre topologique du graphe de précédence
         ordered_tasks = list(nx.topological_sort(self.graph))
         threads = []
+        # Pour chaque tâche, créer un thread pour l'exécuter et l'ajouter à la liste de threads
         for task_name in ordered_tasks:
             task = next(t for t in self.tasks if t.name == task_name)
             thread = threading.Thread(target=task.run)
             thread.start()
             threads.append(thread)
 
+        # Attendre la fin de l'exécution de tous les threads
         for thread in threads:
             thread.join()
+
 
     # Cette fonction affiche le graphe de précédence en utilisant networkx et matplotlib
     def draw(self):
@@ -118,40 +125,41 @@ class TaskSystem:
     # Cette fonction compare les temps d'exécution en séquentiel et en parallèle
 
     def parCost(self):
-        num_runs = 100
-        seq_times = []
-        par_times = []
+        num_runs = 100  # Nombre de fois où chaque exécution est réalisée
+        seq_times = []  # Liste pour stocker les temps d'exécution en séquentiel
+        par_times = []  # Liste pour stocker les temps d'exécution en parallèle
 
         for _ in range(num_runs):
+            # Mesurer le temps d'exécution en séquentiel
             start_time = time.perf_counter()
             self.runSeq()
             end_time = time.perf_counter()
             seq_times.append(end_time - start_time)
 
+            # Mesurer le temps d'exécution en parallèle
             start_time = time.perf_counter()
             self.run()
             end_time = time.perf_counter()
             par_times.append(end_time - start_time)
 
+        # Calculer le temps d'exécution moyen pour chaque méthode
         avg_seq_time = sum(seq_times) / num_runs
         avg_par_time = sum(par_times) / num_runs
 
+        # Afficher les temps d'exécution moyens pour chaque méthode
         print(f"Temps d'exécution moyen en séquentiel : {avg_seq_time:.4f} s")
         print(f"Temps d'exécution moyen en parallèle : {avg_par_time:.4f} s")
 
 # Fonctions de tâche en dehors de la classe TaskSystem
-
 
 def runT1(self):
     self.X = 1
     # Pour savoir si la fonction detTestRnd() peut détecter si un système n'est pas déterministe
     # self.X = random.randint(1, 10)
 
-
 def runT2(self):
     self.Y = 2
     # self.Y = random.randint(1, 10)
-
 
 def runTsomme(self):
     self.Z = self.X + self.Y

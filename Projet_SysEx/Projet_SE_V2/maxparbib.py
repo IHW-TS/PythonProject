@@ -1,5 +1,4 @@
 import maxpar
-import matplotlib.pyplot as plt
 
 def test_maxpar():
     # Création des tâches avec leurs dépendances et leurs fonctions de mise à jour
@@ -8,7 +7,7 @@ def test_maxpar():
     tSomme = maxpar.Task("somme", ["X", "Y"], ["Z"], lambda: maxpar.runTsomme(s1))
 
     # Création du système de tâches avec la liste des tâches et leurs relations de précédence
-    s1 = maxpar.TaskSystem([t1, t2, tSomme], {"T1": [], "T2": ["T1"], "somme": ["T1", "T2"]})
+    s1 = maxpar.TaskSystem([t1, t2, tSomme], {"T1": [], "T2": [], "somme": ["T1", "T2"]})
     
     # Exécution séquentielle des tâches
     s1.runSeq()
@@ -19,10 +18,10 @@ def test_maxpar():
     print(s1.X, s1.Y, s1.Z)
 
     # Affichage du graphe de précédence
-    #s1.draw()
+    s1.draw()
 
     # Test de déterminisme avec des exécutions randomisées
-    #s1.detTestRnd()
+    s1.detTestRnd()
 
     # Comparaison des temps d'exécution séquentielle et parallèle
     s1.parCost()
