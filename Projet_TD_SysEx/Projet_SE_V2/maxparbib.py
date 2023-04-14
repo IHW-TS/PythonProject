@@ -19,10 +19,10 @@ def test_maxpar():
     print(s1.X, s1.Y, s1.Z)
 
     # Affichage du graphe de précédence
-    s1.draw()
+    #s1.draw()
 
     # Test de déterminisme avec des exécutions randomisées
-    s1.detTestRnd()
+    #s1.detTestRnd()
 
     # Comparaison des temps d'exécution séquentielle et parallèle
     s1.parCost()

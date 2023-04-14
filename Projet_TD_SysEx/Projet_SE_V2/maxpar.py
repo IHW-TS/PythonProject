@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 import networkx as nx
 
 # La classe Task représente une tâche avec un nom, les ressources qu'elle lit et écrit, et une fonction pour exécuter la tâche
+
+
 class Task:
     def __init__(self, name, reads, writes, run):
         self.name = name
@@ -13,6 +15,8 @@ class Task:
         self.run = run
 
 # La classe TaskSystem représente un ensemble de tâches avec un graphe de précédence
+
+
 class TaskSystem:
     def __init__(self, tasks, precedence):
         self.tasks = tasks
@@ -33,12 +37,14 @@ class TaskSystem:
         # Vérification de la cohérence des noms de tâches dans le graphe de précédence
         for task_name in self.precedence.keys():
             if task_name not in task_names:
-                raise ValueError(f"Le nom de tâche {task_name} dans le dictionnaire de précédence n'est pas dans la liste des tâches")
+                raise ValueError(
+                    f"Le nom de tâche {task_name} dans le dictionnaire de précédence n'est pas dans la liste des tâches")
 
         for dependencies in self.precedence.values():
             for dep in dependencies:
                 if dep not in task_names:
-                    raise ValueError(f"La dépendance {dep} n'est pas une tâche valide")
+                    raise ValueError(
+                        f"La dépendance {dep} n'est pas une tâche valide")
 
     # Cette fonction construit le graphe de précédence à partir des informations fournies
     def build_graph(self):
@@ -76,13 +82,14 @@ class TaskSystem:
     # Cette fonction affiche le graphe de précédence en utilisant networkx et matplotlib
     def draw(self):
         pos = nx.spring_layout(self.graph)
-        nx.draw(self.graph, pos, with_labels=True, node_size=2000, node_color="skyblue", font_size=10, font_weight="bold")
+        nx.draw(self.graph, pos, with_labels=True, node_size=2000,
+                node_color="skyblue", font_size=10, font_weight="bold")
         plt.show()
 
     # Cette fonction teste le déterminisme du système en exécutant plusieurs fois les tâches
 
     def detTestRnd(self, num_tests=100):
-        
+
         for _ in range(num_tests):
             # Générer des valeurs aléatoires pour les variables X, Y et Z
             self.X = random.randint(1, 100)
@@ -108,9 +115,8 @@ class TaskSystem:
                 return
         print(f"Aucune indétermination détectée après {num_tests} tests")
 
-
-
     # Cette fonction compare les temps d'exécution en séquentiel et en parallèle
+
     def parCost(self):
         num_runs = 100
         seq_times = []
