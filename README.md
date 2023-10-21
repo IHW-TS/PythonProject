@@ -10,7 +10,7 @@ Développé en Python 3.6.0
 
 - Ennoncé du Sujet
 - Rechercher en profondeur => Problème : Affiche le premier chemin trouvé et non le plus court, le reste est correct. 
-- Compte rendu en LateX + étude expérimentale pas assez approfondie *(pas eu le temps)*, je recommande de faire un graphique et avec au moins 100 exécutions avec des valeurs différentes pour comparer le temps d'exécution du programme CPU etc... 
+- Compte rendu en LateX + étude expérimentale pas assez approfondie *(pas eu le temps)*. Le prof recommande de faire un graphique et avec au moins 100 exécutions *(voir plus)* avec des valeurs différentes pour comparer le temps d'exécution du programme CPU etc... 
 - **25%** de la Note Finale
 - Note obtenue : **17/20**.
 
