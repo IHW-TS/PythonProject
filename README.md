@@ -40,7 +40,7 @@ Développé en Python 3.6.0
 ```
 - Diaporama (bientôt)
 - **50%** de la note final voir plus
-- Ma note : 16.5/20 (la partie question/réponse à l'oral en fonction de la qualité de votre réponse, vous fera gagner ou perdre des points).
+- Ma note : 16.5/20 (la partie question/réponse à l'oral, en fonction de la qualité de votre réponse, vous fera gagner ou perdre des points).
 
 # Installation
 ### Windows
