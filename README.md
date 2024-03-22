@@ -4,7 +4,34 @@ Plusieurs projets universitaire mettant en pratique la stratégie de recherche _
 résoudre des taquins.
 Développé en Python 3.6.0
 
-## Projet en IA
+## Projet en IA - M.HANCZAR
+
+Ce dépôt contient une solution en Python pour résoudre le célèbre problème du voyageur de commerce (PVC) à l'aide d'un algorithme génétique. Le PVC est un problème algorithmique bien connu qui vise à trouver l'itinéraire le plus court passant par un ensemble de villes et revenant à la ville d'origine.
+
+- Implémentation d'un algorithme génétique pour résoudre le PVC.
+- Visualisation de l'itinéraire le plus court trouvé par l'algorithme.
+- Paramètres personnalisables pour l'algorithme.
+- Interface simple et intuitive pour entrer les villes et afficher la solution.
+
+Pour exécuter le solveur PVC, lancez la commande suivante :
+
+```bash 
+python solveur_pvc.py
+```
+L'algorithme génétique commence avec une population générée aléatoirement d'itinéraires et améliore itérativement les solutions en imitant le processus de sélection naturelle.
+
+num_cities : Nombre de villes dans le PVC.
+population_size : Nombre d'itinéraires dans chaque génération.
+mutation_rate : Probabilité de mutation pour chaque itinéraire.
+num_generations : Nombre de générations à simuler.
+Vous pouvez modifier ces paramètres dans le fichier solveur_pvc.py.
+
+Le script plot_route.py utilise matplotlib pour visualiser le meilleur itinéraire. Exécutez-le séparément si nécessaire :
+```bash
+python plot_route.py
+```
+
+## Projet en IA - M.JANODET
 
 #### Projet d'échauffement "Missionnaire et Cannibale" 
 
